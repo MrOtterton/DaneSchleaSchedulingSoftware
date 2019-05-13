@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="375.0" prefWidth="400.0" style="-fx-background-color: #2e2b61;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.ManageCustomerController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3f3d57" height="50.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="400.0" />
+      <Label fx:id="labelManCust" layoutX="15.0" layoutY="7.0" prefHeight="35.0" prefWidth="153.0" text="Manage Customer" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3f3d57" height="50.0" layoutY="330.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="400.0" />
+      <Label fx:id="mCustName" layoutX="15.0" layoutY="64.0" prefHeight="35.0" prefWidth="100.0" text="Name" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </Label>
+      <Label fx:id="mCustAddress" layoutX="15.0" layoutY="99.0" prefHeight="35.0" prefWidth="100.0" text="Address" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </Label>
+      <Label fx:id="mCustCity" layoutX="15.0" layoutY="169.0" prefHeight="35.0" prefWidth="100.0" text="City" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </Label>
+      <Label fx:id="mCustAddressCont" layoutX="15.0" layoutY="134.0" prefHeight="35.0" prefWidth="100.0" text="Address 2" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </Label>
+      <Label fx:id="mCustPostal" layoutX="15.0" layoutY="207.0" prefHeight="35.0" prefWidth="100.0" text="Postal Code" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </Label>
+      <Label fx:id="mCustCountry" layoutX="15.0" layoutY="242.0" prefHeight="35.0" prefWidth="100.0" text="Country" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </Label>
+      <Label fx:id="mCustPhone" layoutX="15.0" layoutY="277.0" prefHeight="35.0" prefWidth="100.0" text="Phone Number" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </Label>
+      <TextField fx:id="mCustNameField" layoutX="124.0" layoutY="68.0" prefWidth="235.0" promptText="Customer Name" />
+      <TextField fx:id="mCustAddressField" layoutX="124.0" layoutY="103.0" prefWidth="235.0" promptText="Street Address" />
+      <TextField fx:id="mCustAddressContField" layoutX="124.0" layoutY="138.0" prefWidth="235.0" promptText="Street Address Cont." />
+      <TextField fx:id="mCustCityField" layoutX="124.0" layoutY="173.0" prefWidth="235.0" promptText="City" />
+      <TextField fx:id="mCustPostalField" layoutX="124.0" layoutY="211.0" prefWidth="235.0" promptText="Postal Code" />
+      <TextField fx:id="mCustCountryField" layoutX="124.0" layoutY="246.0" prefWidth="235.0" promptText="Country" />
+      <TextField fx:id="mCustPhoneField" layoutX="124.0" layoutY="281.0" prefWidth="235.0" promptText="Telephone Number" />
+      <Button fx:id="mCustSave" layoutX="200.0" layoutY="340.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Save">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="mCustCancel" layoutX="294.0" layoutY="340.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Cancel">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
