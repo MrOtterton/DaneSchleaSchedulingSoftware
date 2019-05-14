@@ -10,5 +10,44 @@ package Models;
  * @author Dane Schlea
  */
 public class City {
+    private int cityID;
+    private String city;
+    private int countryID;
+
+    public City(int cityID, String city, int countryID) {
+        this.cityID = cityID;
+        this.city = city;
+        this.countryID = countryID;
+    }
+    
+    //Getter
+
+    public int getCityID() {
+        return cityID;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public int getCountryID() {
+        return countryID;
+    }
+    
+    //Setter
+
+    public void setCityID(int cityID) {
+        this.cityID = cityID;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setCountryID(int countryID) {
+        this.countryID = countryID;
+    }
+    
+    
     
 }

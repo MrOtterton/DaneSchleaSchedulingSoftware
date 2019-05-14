@@ -63,13 +63,9 @@ public class ManageAppointmentController implements Initializable {
     @FXML
     private DatePicker mAppDateEnd;
     @FXML
-    private ComboBox<?> mAppHourStart;
+    private ComboBox<String> mAppStart;
     @FXML
-    private ComboBox<?> mAppMinEnd;
-    @FXML
-    private ComboBox<?> mAppHourEnd;
-    @FXML
-    private ComboBox<?> mAppMinStart;
+    private ComboBox<String> mAppEnd;
 
     /**
      * Initializes the controller class.
