@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -43,9 +44,9 @@ public class AppointmentsController implements Initializable {
     @FXML
     private TableColumn<Appointment, String> appConsView;
     @FXML
-    private TextField appSearchField;
+    private RadioButton appMonthly;
     @FXML
-    private Button appSearch;
+    private RadioButton appWeekly;
     @FXML
     private Button appClose;
     @FXML
