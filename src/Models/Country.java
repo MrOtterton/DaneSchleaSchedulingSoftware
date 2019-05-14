@@ -5,6 +5,8 @@
  */
 package Models;
 
+import java.io.IOException;
+
 /**
  *
  * @author Dane Schlea
@@ -38,4 +40,10 @@ public class Country {
         this.country = country;
     }
     
+    public static String countryValidate(String country, String errorMessage) throws IOException{
+        if(country == null){
+            errorMessage = errorMessage + "Invalid country.";
+        }
+        return errorMessage = "";
+    }
 }

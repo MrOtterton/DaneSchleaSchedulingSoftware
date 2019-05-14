@@ -5,6 +5,8 @@
  */
 package Models;
 
+import java.io.IOException;
+
 /**
  *
  * @author Dane Schlea
@@ -80,4 +82,18 @@ public class Address {
         this.phone = phone;
     }
     
+    //Address validation
+    
+    public static String addressValidate(String address, String postalCode, String phone, String errorMessage) throws IOException{
+        if(address == null){
+            errorMessage = errorMessage + "Invalid address.";
+        }
+        else if(postalCode == null){
+            errorMessage = errorMessage + "Invalid postal code.";
+        }
+        else if(phone == null){
+            errorMessage = errorMessage + "Invalid phone.";
+        }
+        return errorMessage = "";
+    }
 }

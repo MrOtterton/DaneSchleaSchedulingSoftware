@@ -5,6 +5,8 @@
  */
 package Models;
 
+import java.io.IOException;
+
 /**
  *
  * @author Dane Schlea
@@ -60,6 +62,11 @@ public class Customer {
         this.custActive = cusActive;
     }
     
-    
+    public static String customerValidate(String customerName, String errorMessage) throws IOException{
+        if(customerName == null){
+            errorMessage = errorMessage + "Invalid name.";
+        }
+        return errorMessage = "";
+    }
     
 }

@@ -5,6 +5,8 @@
  */
 package Models;
 
+import java.io.IOException;
+
 /**
  *
  * @author Dane Schlea
@@ -48,6 +50,11 @@ public class City {
         this.countryID = countryID;
     }
     
-    
+    public static String cityValidate(String city, String errorMessage) throws IOException{
+        if(city == null){
+            errorMessage = errorMessage + "Invalid city.";
+        }
+        return errorMessage = "";
+    }
     
 }
