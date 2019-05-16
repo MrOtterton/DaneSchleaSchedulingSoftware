@@ -5,7 +5,10 @@
  */
 package Models;
 
+import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 /**
  *
@@ -120,5 +123,42 @@ public class Appointment {
         this.end = end;
     }
     
+    public static String appointmentValidate(String title, String description, String location, String contact, String url, LocalDateTime start, LocalDateTime end, String errorMessage) throws IOException{
+        LocalDate startDate = start.toLocalDate();
+        LocalDate endDate = end.toLocalDate();
+        int dayOfWeek = startDate.getDayOfWeek().getValue();
+        
+        LocalTime startTime = start.toLocalTime();
+        LocalTime endTime = end.toLocalTime();
+        
+        if(title == null){
+           return errorMessage = errorMessage + "Invalid title.";
+       }
+       else if(description == null){
+           return errorMessage = errorMessage + "Invalid description.";
+       }
+       else if(location == null){
+           return errorMessage = errorMessage + "Invalid location.";
+       }
+       else if(contact == null){
+           return errorMessage = errorMessage + "Invalid contact.";
+       }
+       else if(url == null){
+           return errorMessage = errorMessage + "Invalid url.";
+       }
+       else if(start == end || start == null || end == null){
+           return errorMessage = errorMessage + "Invalid times.";
+       }
+       else if(startDate != endDate){
+           return errorMessage = errorMessage + "Appointments cannot span multiple days.";
+       }
+       else if(dayOfWeek == 0 || dayOfWeek == 6){
+           return errorMessage = errorMessage + "Can not schedule weekend appointments.";
+       }
+       else if(startTime.isAfter(endTime)){
+           return errorMessage = errorMessage + "Can not set start before end.";
+       }
+        return errorMessage = "";
+    }
     
 }
