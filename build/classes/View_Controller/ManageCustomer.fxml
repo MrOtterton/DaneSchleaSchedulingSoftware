@@ -85,7 +85,7 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="mCustCancel" layoutX="294.0" layoutY="340.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Cancel">
+      <Button fx:id="mCustCancel" layoutX="294.0" layoutY="340.0" mnemonicParsing="false" onAction="#handleManageCustomerCancel" prefHeight="25.0" prefWidth="80.0" text="Cancel">
          <font>
             <Font size="14.0" />
          </font>

@@ -6,13 +6,19 @@
 package View_Controller;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 
 /**
  * FXML Controller class
@@ -20,6 +26,8 @@ import javafx.scene.control.TextField;
  * @author Shakla
  */
 public class LoginController implements Initializable {
+    
+    ResourceBundle rb;
     
     //UI items
     @FXML
@@ -37,6 +45,17 @@ public class LoginController implements Initializable {
     @FXML
     private TextField uField;
 
+    @FXML
+    void handleLoginExit(ActionEvent event){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.initModality(Modality.NONE);
+        alert.setTitle("Exit");
+        alert.setHeaderText("Confirm exit.");
+        alert.showAndWait()
+            .filter(response -> response == ButtonType.OK)
+            .ifPresent(response -> System.exit(0));
+    }    
+        
     /**
      * Initializes the controller class.
      */

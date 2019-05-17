@@ -16,7 +16,7 @@
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3f3d57" height="53.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="600.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3f3d57" height="53.0" layoutY="347.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="600.0" />
-      <Button fx:id="reportsClose" layoutX="509.0" layoutY="358.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="62.0" text="Close" />
+      <Button fx:id="reportsClose" layoutX="509.0" layoutY="358.0" mnemonicParsing="false" onAction="#handleReportsCancel" prefHeight="31.0" prefWidth="62.0" text="Close" />
       <TabPane fx:id="mainReportsTab" layoutY="53.0" prefHeight="291.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab fx:id="scheduleTab" text="Your Schedule">
