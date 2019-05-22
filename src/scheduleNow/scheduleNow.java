@@ -20,7 +20,7 @@ public class scheduleNow extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(scheduleNow.class.getResource("/View_Controller/MainMenu.fxml"));
+        loader.setLocation(scheduleNow.class.getResource("/View_Controller/Login.fxml"));
         Parent main = loader.load();
     
         Scene scene = new Scene(main);

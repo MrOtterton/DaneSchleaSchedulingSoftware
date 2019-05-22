@@ -3,6 +3,8 @@ package Models;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -12,7 +14,7 @@ public class mainDB {
     
     //Database connection info
     private static final String dbName = "U04Rc2";
-    private static final String dbURL = "jdbc:mysql://52.206.157.109" + dbName;
+    private static final String dbURL = "jdbc:mysql://52.206.157.109:3306/" + dbName;
     private static final String dbUser = "U04Rc2";
     private static final String dbPass = "53688320962";
     private static final String dbDriver = "com.mysql.jdbc.Driver";
@@ -23,12 +25,11 @@ public class mainDB {
         try{
             Class.forName(dbDriver);
             dbConn = DriverManager.getConnection(dbURL, dbUser, dbPass);
-        }
-        catch(SQLException e){
-            System.out.println("SQL exception");
         } 
         catch (ClassNotFoundException e) {
             System.out.println("Class exception");
+        } catch (SQLException se) {
+            System.out.println("SQL Exception");
         }
     }
     
@@ -45,4 +46,6 @@ public class mainDB {
     public static Connection getConn(){
         return dbConn;
     }
+    
+    
 }

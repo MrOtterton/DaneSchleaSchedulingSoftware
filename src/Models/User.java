@@ -25,6 +25,10 @@ public class User {
         this.userActive = userActive;
     }
     
+    public User(){
+        
+    }
+    
     //Getters
 
     public int getUserID() {
