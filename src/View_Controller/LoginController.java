@@ -6,7 +6,8 @@
 package View_Controller;
 
 import Models.User;
-import static Models.mainDB.*;
+import Util.Logger;
+import static Util.mainDB.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.PreparedStatement;
@@ -26,7 +27,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -47,7 +47,7 @@ public class LoginController implements Initializable {
     @FXML
     private Button loginSubmit;
     @FXML
-    private Label labelUsername;
+    private Label labelUserName;
     @FXML
     private Label labelPassword;
     @FXML
@@ -57,8 +57,7 @@ public class LoginController implements Initializable {
     
     //Reference items
     User user = new User();
-    private Stage primaryStage;
-    private AnchorPane mainMenu;
+    private static String currentUser;
 
     @FXML
     void handleLoginExit(ActionEvent event){
@@ -78,6 +77,8 @@ public class LoginController implements Initializable {
         try{
             User userValid = loginValidation(thisUser, thisPass);
             if(userValid != null){
+                setCurrentUser(thisUser);
+                
                 showMenu(event);
             }
         }
@@ -93,7 +94,11 @@ public class LoginController implements Initializable {
         // TODO
     }    
     
-    //Check Username and Password for nulls and validates if Username and Password match DB records
+    private static void setCurrentUser(String userName){
+        currentUser = userName;
+    }
+    
+    //Check UserName and Password for nulls and validates if UserName and Password match DB records
     User loginValidation(String userName, String password) throws IOException{
         if(userName == null || password == null){
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -110,9 +115,10 @@ public class LoginController implements Initializable {
             prepS.setString(2, password);
             ResultSet loginRes = prepS.executeQuery();
             if(loginRes.next()){
-                user.setUsername(loginRes.getString("userName"));
+                user.setUserName(loginRes.getString("userName"));
                 user.setPassword(loginRes.getString("password"));
                 user.setUserID(loginRes.getInt("userID"));
+                Logger.log(userName, true);
             }
             else{
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -128,6 +134,8 @@ public class LoginController implements Initializable {
         return user;
     } 
     
+    
+    //Load Main Menu
     private void showMenu(ActionEvent event) throws IOException{
         Parent showMenuParent = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
         Scene showMenuScene = new Scene(showMenuParent);
