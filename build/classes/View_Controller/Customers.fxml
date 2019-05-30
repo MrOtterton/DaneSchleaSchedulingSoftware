@@ -13,14 +13,13 @@
    <children>
       <TableView fx:id="custView" layoutY="100.0" prefHeight="238.0" prefWidth="800.0" style="-fx-background-color: #d0cfe4;">
         <columns>
-          <TableColumn fx:id="custIDView" editable="false" prefWidth="50.0" style="-fx-background-color: #6f8bb1; -fx-border-color: black;" text="ID" />
           <TableColumn fx:id="custNameView" editable="false" prefWidth="150.0" style="-fx-background-color: #6f8bb1; -fx-border-color: black;" text="Customer Name" />
             <TableColumn fx:id="custPhoneView" editable="false" prefWidth="100.0" style="-fx-background-color: #6f8bb1; -fx-border-color: black;" text="Phone Number" />
-            <TableColumn fx:id="custAddView" editable="false" prefWidth="100.0" style="-fx-background-color: #6f8bb1; -fx-border-color: black;" text="Address" />
-            <TableColumn fx:id="custAddTwoView" editable="false" prefWidth="100.0" style="-fx-background-color: #6f8bb1; -fx-border-color: black;" text="Address 2" />
-            <TableColumn fx:id="custCityView" editable="false" prefWidth="100.0" style="-fx-background-color: #6f8bb1; -fx-border-color: black;" text="City" />
-            <TableColumn fx:id="custPostalView" editable="false" prefWidth="100.0" style="-fx-background-color: #6f8bb1; -fx-border-color: black;" text="Postal Code" />
-            <TableColumn fx:id="custCountryView" editable="false" prefWidth="100.0" style="-fx-background-color: #6f8bb1; -fx-border-color: black;" text="Country" />
+            <TableColumn fx:id="custAddView" editable="false" prefWidth="148.0" style="-fx-background-color: #6f8bb1; -fx-border-color: black;" text="Address" />
+            <TableColumn fx:id="custAddTwoView" editable="false" prefWidth="85.0" style="-fx-background-color: #6f8bb1; -fx-border-color: black;" text="Address 2" />
+            <TableColumn fx:id="custCityView" editable="false" prefWidth="110.0" style="-fx-background-color: #6f8bb1; -fx-border-color: black;" text="City" />
+            <TableColumn fx:id="custPostalView" editable="false" prefWidth="119.0" style="-fx-background-color: #6f8bb1; -fx-border-color: black;" text="Postal Code" />
+            <TableColumn fx:id="custCountryView" editable="false" prefWidth="87.0" style="-fx-background-color: #6f8bb1; -fx-border-color: black;" text="Country" />
         </columns>
       </TableView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3f3d57" height="50.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="800.0" />

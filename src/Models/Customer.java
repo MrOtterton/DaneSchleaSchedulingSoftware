@@ -6,6 +6,8 @@
 package Models;
 
 import java.io.IOException;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -16,6 +18,13 @@ public class Customer {
     private String customerName;
     private int addressID;
     private int custActive;
+    private static ObservableList<Customer> customerList = FXCollections.observableArrayList();
+    private String phone;
+    private String address;
+    private String addressTwo;
+    private String city;
+    private String postal;
+    private String country;
     
     //Constructor
     
@@ -25,8 +34,46 @@ public class Customer {
     this.addressID = addressID;
     this.custActive = custActive;
     }
+    
+    public Customer(String customerName, String phone, String address, String addressTwo, String city, String postal, String country){
+        this.customerName = customerName;
+        this.phone = phone;
+        this.address = address;
+        this.addressTwo = addressTwo;
+        this.city = city;
+        this.postal = postal;
+        this.country = country;
+    }
+    
+//Getters
 
-    //Getters
+    public static ObservableList<Customer> getCustomerList() {
+        return customerList;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getAddressTwo() {
+        return addressTwo;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getPostal() {
+        return postal;
+    }
+
+    public String getCountry() {
+        return country;
+    }
     
     public int getCustomerID() {
         return customerID;
@@ -45,6 +92,36 @@ public class Customer {
     }
 
     //Setters
+
+    public static void setCustomerList(ObservableList<Customer> customerList) {
+        Customer.customerList = customerList;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setAddressTwo(String addressTwo) {
+        this.addressTwo = addressTwo;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setPostal(String postal) {
+        this.postal = postal;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+    
+    
     
     public void setCustomerID(int customerID) {
         this.customerID = customerID;

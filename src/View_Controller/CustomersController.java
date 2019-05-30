@@ -5,11 +5,26 @@
  */
 package View_Controller;
 
+import Models.Address;
+import Models.City;
+import Models.Country;
 import Models.Customer;
+import Util.mainDB;
+import static Util.mainDB.dbConnect;
+import static Util.mainDB.getConn;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
@@ -37,8 +52,6 @@ public class CustomersController implements Initializable {
     //UI items
     @FXML
     private TableView<Customer> custView;
-    @FXML
-    private TableColumn<Customer, Integer> custIDView;
     @FXML
     private TableColumn<Customer, String> custNameView;
     @FXML
@@ -100,10 +113,59 @@ public class CustomersController implements Initializable {
 
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        custNameView.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCustomerName()));
+        custPhoneView.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPhone()));
+        custAddView.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAddress()));
+        custAddTwoView.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAddressTwo()));
+        custCityView.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCity()));
+        custPostalView.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPostal()));
+        custCountryView.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCountry()));
+        populateCustomers();
+        custView.getItems().setAll(populateCustomers());
     }    
+
+    protected List<Customer> populateCustomers() {
+        String pCustName;
+        String pPhone;
+        String pAddress;
+        String pAddressTwo;
+        String pCity;
+        String pPostal;
+        String pCountry;
+        
+        ObservableList<Customer> customerList = FXCollections.observableArrayList();
+        
+        try{
+            dbConnect();
+            PreparedStatement prepState = getConn().prepareStatement(
+                    "SELECT customer.customerName, address.phone, address.address, address.address2, city.cityId, city.city, address.postalCode, country.country " +
+                    "FROM customer, address, city, country " +
+                    "WHERE customer.addressId = address.addressId AND address.cityId = city.cityId AND city.countryId = country.countryId " +
+                    "ORDER BY customer.customerName");
+            
+            ResultSet resSet = prepState.executeQuery();
+            while(resSet.next()){
+                pCustName = resSet.getString("customer.customerName");
+                pPhone = resSet.getString("address.phone");
+                pAddress = resSet.getString("address.address");
+                pAddressTwo = resSet.getString("address.address2");
+                pCity = resSet.getString("city.city");
+                pPostal = resSet.getString("address.postalCode");
+                pCountry = resSet.getString("country.country");
+                
+                customerList.add(new Customer(pCustName, pPhone, pAddress, pAddressTwo, pCity, pPostal, pCountry));
+            }
+        } catch (SQLException ex) {
+            System.out.println("SQL error");
+        } catch (Exception e){
+            System.out.println("Non-sql error");
+        }
+        return customerList;
+    }
     
 }

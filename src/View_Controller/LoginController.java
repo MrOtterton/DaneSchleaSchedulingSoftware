@@ -98,7 +98,12 @@ public class LoginController implements Initializable {
         currentUser = userName;
     }
     
-    //Check UserName and Password for nulls and validates if UserName and Password match DB records
+    /*
+     * Check UserName and Password for nulls
+     * valides username and password in the DB
+     * uses lambdas for incorrect username/password entries to exit system
+     * logs successful logins in a text file with the user who logged in
+     */ 
     User loginValidation(String userName, String password) throws IOException{
         if(userName == null || password == null){
             Alert alert = new Alert(Alert.AlertType.ERROR);
