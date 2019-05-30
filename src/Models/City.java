@@ -12,25 +12,25 @@ import java.io.IOException;
  * @author Dane Schlea
  */
 public class City {
-    private int cityID;
+    private String cityID;
     private String city;
-    private int countryID;
+    private String countryID;
 
     //Constructors
-    public City(int cityID, String city, int countryID) {
+    public City(String cityID, String city, String countryID) {
         this.cityID = cityID;
         this.city = city;
         this.countryID = countryID;
     }
     
-    public City(int cityID, String city){
+    public City(String cityID, String city){
         this.cityID = cityID;
         this.city = city;
     }
     
     //Getter
 
-    public int getCityID() {
+    public String getCityID() {
         return cityID;
     }
 
@@ -38,13 +38,13 @@ public class City {
         return city;
     }
 
-    public int getCountryID() {
+    public String getCountryID() {
         return countryID;
     }
     
     //Setter
 
-    public void setCityID(int cityID) {
+    public void setCityID(String cityID) {
         this.cityID = cityID;
     }
 
@@ -52,7 +52,7 @@ public class City {
         this.city = city;
     }
 
-    public void setCountryID(int countryID) {
+    public void setCountryID(String countryID) {
         this.countryID = countryID;
     }
     

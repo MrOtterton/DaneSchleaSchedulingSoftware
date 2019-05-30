@@ -14,10 +14,10 @@ import javafx.collections.ObservableList;
  * @author Dane Schlea
  */
 public class Customer {
-    private int customerID;
+    private String customerID;
     private String customerName;
-    private int addressID;
-    private int custActive;
+    private String addressID;
+    private String custActive;
     private static ObservableList<Customer> customerList = FXCollections.observableArrayList();
     private String phone;
     private String address;
@@ -28,7 +28,7 @@ public class Customer {
     
     //Constructor
     
-    public Customer(int customerID, String customerName, int addressID, int custActive){
+    public Customer(String customerID, String customerName, String addressID, String custActive){
     this.customerID = customerID;
     this.customerName = customerName;
     this.addressID = addressID;
@@ -75,7 +75,7 @@ public class Customer {
         return country;
     }
     
-    public int getCustomerID() {
+    public String getCustomerID() {
         return customerID;
     }
 
@@ -83,11 +83,11 @@ public class Customer {
         return customerName;
     }
 
-    public int getAddressID() {
+    public String getAddressID() {
         return addressID;
     }
 
-    public int getCusActive() {
+    public String getCusActive() {
         return custActive;
     }
 
@@ -123,7 +123,7 @@ public class Customer {
     
     
     
-    public void setCustomerID(int customerID) {
+    public void setCustomerID(String customerID) {
         this.customerID = customerID;
     }
 
@@ -131,11 +131,11 @@ public class Customer {
         this.customerName = customerName;
     }
 
-    public void setAddressID(int addressID) {
+    public void setAddressID(String addressID) {
         this.addressID = addressID;
     }
 
-    public void setCusActive(int cusActive) {
+    public void setCusActive(String cusActive) {
         this.custActive = cusActive;
     }
     

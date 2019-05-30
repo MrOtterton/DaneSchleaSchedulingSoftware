@@ -67,10 +67,6 @@ public class CustomersController implements Initializable {
     @FXML
     private TableColumn<Customer, String> custCountryView;
     @FXML
-    private TextField custSearchField;
-    @FXML
-    private Button custSearch;
-    @FXML
     private Button custClose;
     @FXML
     private Label labelCustomers;
@@ -81,6 +77,7 @@ public class CustomersController implements Initializable {
     @FXML
     private Button custDelete;
     
+    //cancel from window to main menu
     @FXML
     private void handleCustomersCancel(ActionEvent event) throws IOException{
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -101,7 +98,7 @@ public class CustomersController implements Initializable {
             System.out.println("Operation cancelled.");
         }
     }
-    
+    //add customer
     @FXML
     private void addCustomerHandler(ActionEvent event) throws IOException {
         Parent addCustomerParent = FXMLLoader.load(getClass().getResource("ManageCustomer.fxml"));
@@ -109,6 +106,23 @@ public class CustomersController implements Initializable {
         Stage addCustomerStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         addCustomerStage.setScene(addCustomerScene);
         addCustomerStage.show();
+    }
+    //delete customer
+    @FXML
+    private void deleteCustomerHandler(ActionEvent event) throws IOException {
+        Customer customerSelected = custView.getSelectionModel().getSelectedItem();
+        if(customerSelected != null){    
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.initModality(Modality.NONE);
+            alert.setTitle("Customer delete");
+            alert.setHeaderText("Confirm delete?");
+            alert.setContentText("Are you sure you want to delete this customer?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if(result.get() == ButtonType.OK){
+                deleteCustomer(customerSelected);
+                custView.getItems().setAll(populateCustomers());
+            }
+        }
     }
 
     /**
@@ -125,10 +139,11 @@ public class CustomersController implements Initializable {
         custCityView.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCity()));
         custPostalView.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPostal()));
         custCountryView.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCountry()));
-        populateCustomers();
+        
         custView.getItems().setAll(populateCustomers());
     }    
-
+    
+    //Populate the TableView with customers information
     protected List<Customer> populateCustomers() {
         String pCustName;
         String pPhone;
@@ -137,9 +152,9 @@ public class CustomersController implements Initializable {
         String pCity;
         String pPostal;
         String pCountry;
-        
+        //build the customer list
         ObservableList<Customer> customerList = FXCollections.observableArrayList();
-        
+        //connect to the db and pull customers info where it matches
         try{
             dbConnect();
             PreparedStatement prepState = getConn().prepareStatement(
@@ -166,6 +181,17 @@ public class CustomersController implements Initializable {
             System.out.println("Non-sql error");
         }
         return customerList;
+    }
+
+    private void deleteCustomer(Customer customerSelected) {
+        try{
+            dbConnect();
+            PreparedStatement prepDel = getConn().prepareStatement("DELETE customer.*, address.* FROM customer, address WHERE customer.customerId = ? AND customer.addressId = address.addressId");
+            prepDel.setString(1, customerSelected.getCustomerID());
+            prepDel.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println("SQL issue with deletion");
+        }
     }
     
 }

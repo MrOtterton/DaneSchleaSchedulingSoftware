@@ -122,7 +122,7 @@ public class LoginController implements Initializable {
             if(loginRes.next()){
                 user.setUserName(loginRes.getString("userName"));
                 user.setPassword(loginRes.getString("password"));
-                user.setUserID(loginRes.getInt("userID"));
+                user.setUserID(loginRes.getString("userID"));
                 Logger.log(userName, true);
             }
             else{

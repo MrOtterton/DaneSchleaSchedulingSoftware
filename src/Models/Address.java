@@ -12,16 +12,16 @@ import java.io.IOException;
  * @author Dane Schlea
  */
 public class Address {
-    private int addressID;
+    private String addressID;
     private String address;
     private String addressTwo;
-    private int cityID;
+    private String cityID;
     private String postalCode;
     private String phone;
 
     //Constructor
     
-    public Address(int addressID, String address, String addressTwo, int cityID, String postalCode, String phone) {
+    public Address(String addressID, String address, String addressTwo, String cityID, String postalCode, String phone) {
         this.addressID = addressID;
         this.address = address;
         this.addressTwo = addressTwo;
@@ -32,7 +32,7 @@ public class Address {
     
     //Getter
 
-    public int getAddressID() {
+    public String getAddressID() {
         return addressID;
     }
 
@@ -44,7 +44,7 @@ public class Address {
         return addressTwo;
     }
 
-    public int getCityID() {
+    public String getCityID() {
         return cityID;
     }
 
@@ -58,7 +58,7 @@ public class Address {
     
     //Setter
 
-    public void setAddressID(int addressID) {
+    public void setAddressID(String addressID) {
         this.addressID = addressID;
     }
 
@@ -70,7 +70,7 @@ public class Address {
         this.addressTwo = addressTwo;
     }
 
-    public void setCityID(int cityID) {
+    public void setCityID(String cityID) {
         this.cityID = cityID;
     }
 

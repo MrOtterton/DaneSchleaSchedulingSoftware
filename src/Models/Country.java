@@ -12,17 +12,17 @@ import java.io.IOException;
  * @author Dane Schlea
  */
 public class Country {
-    private int countryID;
+    private String countryID;
     private String country;
     
-    public Country(int countryID, String country){
+    public Country(String countryID, String country){
         this.countryID = countryID;
         this.country = country;
     }
     
     //Getter
     
-    public int getCountryID(){
+    public String getCountryID(){
         return countryID;
     }
     
@@ -32,7 +32,7 @@ public class Country {
     
     //Setter
     
-    public void setCountryID(int countryID){
+    public void setCountryID(String countryID){
         this.countryID = countryID;
     }
     
