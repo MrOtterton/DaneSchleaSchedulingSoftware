@@ -13,7 +13,12 @@ import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
@@ -78,7 +83,14 @@ public class LoginController implements Initializable {
             User userValid = loginValidation(thisUser, thisPass);
             if(userValid != null){
                 setCurrentUser(thisUser);
-                
+                if(checkappt15(thisUser) == true){
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.initModality(Modality.NONE);
+                    alert.setTitle("Reminder");
+                    alert.setHeaderText("Appointment Reminder");
+                    alert.setContentText("You have an appointment in the next 15 minutes. Please check your schedule.");
+                    Optional<ButtonType> result = alert.showAndWait();
+                }
                 showMenu(event);
             }
         }
@@ -147,6 +159,28 @@ public class LoginController implements Initializable {
         Stage showMenuStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         showMenuStage.setScene(showMenuScene);
         showMenuStage.show();
+    }
+
+    //check if any appointments are within current time and 15 minutes of user login
+    private Boolean checkappt15(String thisUser) {
+        LocalDateTime current = LocalDateTime.now();
+        ZoneId zone = ZoneId.systemDefault();
+        ZonedDateTime zone2 = current.atZone(zone);
+        LocalDateTime local = zone2.withZoneSameInstant(ZoneId.of("UTC")).toLocalDateTime();
+        LocalDateTime local2 = local.plusMinutes(15);
+        try{
+            dbConnect();
+            PreparedStatement prepS = getConn().prepareStatement("SELECT * FROM appointment WHERE createdBy = ? AND start BETWEEN '" + local + "'AND '" + local2 + "'");
+            prepS.setString(1, thisUser);
+            ResultSet resS = prepS.executeQuery();
+            if(resS.next()){
+                return true;
+            }
+        } catch (SQLException ee) {
+            System.out.println("SQL error.");
+            return false;
+        }
+        return false;
     }
     
 }

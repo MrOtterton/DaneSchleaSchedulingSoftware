@@ -87,6 +87,11 @@ public class ManageCustomerController implements Initializable {
             System.out.println("Operation cancelled.");
         }
     }
+    
+    @FXML
+    private void handleManageCustomerSave(ActionEvent event) throws IOException{
+        
+    }
 
     /**
      * Initializes the controller class.
