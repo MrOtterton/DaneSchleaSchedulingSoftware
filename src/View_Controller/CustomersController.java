@@ -5,11 +5,9 @@
  */
 package View_Controller;
 
-import Models.Address;
-import Models.City;
-import Models.Country;
 import Models.Customer;
-import Util.mainDB;
+import static Models.Customer.getCustomerList;
+import static Models.Customer.setCustomerList;
 import static Util.mainDB.dbConnect;
 import static Util.mainDB.getConn;
 import java.io.IOException;
@@ -20,8 +18,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -38,10 +34,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import static javax.swing.UIManager.getInt;
 
 /**
  * FXML Controller class
@@ -49,7 +43,7 @@ import static javax.swing.UIManager.getInt;
  * @author Dane Schlea
  */
 public class CustomersController implements Initializable {
-    
+
     //UI items
     @FXML
     private TableView<Customer> custView;
@@ -77,6 +71,14 @@ public class CustomersController implements Initializable {
     private Button custUpdate;
     @FXML
     private Button custDelete;
+    
+    //index of customer
+    private static int updateCustomerIndex;
+    
+    //Customer index getter
+    public static int getUpdateCustomerIndex(){
+        return updateCustomerIndex;
+    }
     
     //cancel from window to main menu
     @FXML
@@ -108,6 +110,33 @@ public class CustomersController implements Initializable {
         addCustomerStage.setScene(addCustomerScene);
         addCustomerStage.show();
     }
+    
+    //update customer
+    @FXML
+    private void updateCustomerHandler(ActionEvent event) throws IOException{
+        Customer updateCustomer = custView.getSelectionModel().getSelectedItem();
+        if(updateCustomer == null){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Selection required");
+            alert.setContentText("You must select a customer to update");
+            alert.showAndWait();
+            return; 
+        }
+        updateCustomerIndex = getCustomerList().indexOf(updateCustomer);
+        
+        try{
+            Parent updateCustParent = FXMLLoader.load(getClass().getResource("UpdateCustomer.fxml"));
+            Scene updateCustScene = new Scene(updateCustParent);
+            Stage updateCustStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            updateCustStage.setScene(updateCustScene);
+            updateCustStage.show();
+        }
+        catch (IOException x){
+            x.printStackTrace();
+        }
+    }
+    
     //delete customer
     @FXML
     private void deleteCustomerHandler(ActionEvent event) throws IOException {
@@ -176,6 +205,7 @@ public class CustomersController implements Initializable {
                 pCountry = resSet.getString("country.country");
                 
                 customerList.add(new Customer(pCustName, pPhone, pAddress, pAddressTwo, pCity, pPostal, pCountry));
+                setCustomerList(customerList);
             }
         } catch (SQLException ex) {
             System.out.println("SQL error");

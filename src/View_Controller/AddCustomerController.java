@@ -16,11 +16,8 @@ import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
@@ -126,9 +123,8 @@ public class AddCustomerController implements Initializable {
                 prepCity.setString(1, cityName);
                 ResultSet resCity = prepCity.executeQuery();
                 while(resCity.next()){
-                    //int rCity = resCity.getInt(1);
                     int rCity = (int) resCity.getObject("cityId");
-                    System.out.println("test 1");            
+                
                 //insert data into address first to get new address key
                 PreparedStatement prepS = getConn().prepareStatement("INSERT INTO address (address, address2, cityId, postalCode, phone, createDate, createdBy, lastUpdate, lastUpdateBy)"
                                 + "VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP, ?, CURRENT_TIMESTAMP, ?)");
@@ -146,16 +142,8 @@ public class AddCustomerController implements Initializable {
                 prepAdd.setString(1, addr);
                 ResultSet resAdd = prepAdd.executeQuery();
                 while(resAdd.next()){
-                    //int rCity = resCity.getInt(1);
                     int rAdd = (int) resAdd.getObject("addressId");
-                    System.out.println("test 2");
-                
-                //get address key
-                //ResultSet rsAdd = prepS.executeQuery();
-                //while(rsAdd.next()){
-                //    int addID = (int) rsAdd.getObject("addressId");
-                //System.out.println("test 2");
-                
+
                 //insert data into customer
                 PreparedStatement pState = getConn().prepareStatement("INSERT INTO customer (customerName, addressId, active, createDate, createdBy, lastUpdate, lastUpdateBy) "
                         + "VALUES (?, ?, ?, CURRENT_TIMESTAMP, ?, CURRENT_TIMESTAMP, ?)");
@@ -165,7 +153,7 @@ public class AddCustomerController implements Initializable {
                 pState.setString(4, LoginController.currentUser);
                 pState.setString(5, LoginController.currentUser);
                 pState.executeUpdate();
-                System.out.println("test 3");
+                
                 //Go back to customers window
                 Parent customersCancel = FXMLLoader.load(getClass().getResource("Customers.fxml"));
                 Scene scene = new Scene(customersCancel);

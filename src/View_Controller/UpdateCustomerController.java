@@ -9,6 +9,7 @@ import Models.Address;
 import Models.City;
 import Models.Country;
 import Models.Customer;
+import static Models.Customer.getCustomerList;
 import static Util.mainDB.dbConnect;
 import static Util.mainDB.getConn;
 import java.io.IOException;
@@ -16,11 +17,8 @@ import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
@@ -79,6 +77,13 @@ public class UpdateCustomerController implements Initializable {
     @FXML
     private Button mCustCancel;
     
+    //modifiers
+    private Customer customer;
+    int updateCustomerIndex = CustomersController.getUpdateCustomerIndex();
+    private String oldName;
+    private String oldAddress;
+    private String oldPhone;
+    
     @FXML
     private void handleUpdateCustomerCancel(ActionEvent event) throws IOException{
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -110,7 +115,7 @@ public class UpdateCustomerController implements Initializable {
         String postal = mCustPostalField.getText();
         String country = mCustCountryField.getText();
         String phone = mCustPhoneField.getText();       
-        if((Customer.customerValidate(name) || Address.addressValidate(addr, postal, phone) || City.cityValidate(cityName) || Country.countryValidate(country)) == false){
+        if(Customer.customerValidate(name) == false || Address.addressValidate(addr, postal, phone) == false || City.cityValidate(cityName) == false || Country.countryValidate(country) == false){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.initModality(Modality.NONE);
             alert.setTitle("Error");
@@ -120,46 +125,52 @@ public class UpdateCustomerController implements Initializable {
         }
         else{
             try{
-                //get cityId and apply it to rc
-                String rc = "";
+                //get cityId
                 dbConnect();
-                PreparedStatement prepCity = getConn().prepareStatement("SELECT cityId AS '" + rc + "' FROM city WHERE city = ?");
+                PreparedStatement prepCity = getConn().prepareStatement("SELECT cityId FROM city WHERE city = ?");
                 prepCity.setString(1, cityName);
                 ResultSet resCity = prepCity.executeQuery();
-                if(resCity.next()){
-                    rc = rc;
-                }
-                System.out.println("Pass 1");
-                //insert data into address first to get new address key
-                PreparedStatement prepS = getConn().prepareStatement("UPDATE address (address, address2, cityId, postalCode, phone, createDate, createdBy, lastUpdate, lastUpdateBy)"
-                                + "VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP, ?, CURRENT_TIMESTAMP, ?)", Statement.RETURN_GENERATED_KEYS);
+                while(resCity.next()){
+                    int rCity = (int) resCity.getObject("cityId");
+                    
+                //update data for address first to get address key
+                PreparedStatement prepS = getConn().prepareStatement("UPDATE address "
+                                + "SET address = ?, address2 = ?, cityId = ?, postalCode = ?, phone = ?, lastUpdate = CURRENT_TIMESTAMP, lastUpdateBy = ? WHERE address = ? AND phone = ?");
                 prepS.setString(1, addr);
                 prepS.setString(2, addr2);
-                prepS.setString(3, rc);
+                prepS.setInt(3, rCity);
                 prepS.setString(4, postal);
                 prepS.setString(5, phone);
                 prepS.setString(6, LoginController.currentUser);
-                prepS.setString(7, LoginController.currentUser);
-                System.out.println("Pass 2");
-                //get address key
-                boolean addRes = prepS.execute();
-                System.out.println("Pass 2.1");
-                int addID = -1;
-                ResultSet rsAdd = prepS.getGeneratedKeys();
-                if(rsAdd.next()){
-                    addID = rsAdd.getInt(1);
-                }
-                System.out.println("Pass 3");
-                //insert data into customer
-                PreparedStatement pState = getConn().prepareStatement("INSERT INTO customer (customerName, addressId, active, createDate, createdBy, lastUpdate, lastUpdateBy "
-                        + "VALUES (?, ?, ?, CURRENT_TIMESTAMP, ?, CURRENT_TIMESTAMP, ?)");
+                prepS.setString(7, oldAddress);
+                prepS.setString(8, oldPhone);
+                prepS.executeUpdate();
+                
+                //Get addressId
+                PreparedStatement prepAdd = getConn().prepareStatement("SELECT addressId FROM address WHERE address = ?");
+                prepAdd.setString(1, addr);
+                ResultSet resAdd = prepAdd.executeQuery();
+                while(resAdd.next()){
+                    int rAdd = (int) resAdd.getObject("addressId");
+                
+                //update data for customer
+                PreparedStatement pState = getConn().prepareStatement("UPDATE customer "
+                        + "SET customerName = ?, addressId = ?, active = ?, lastUpdate = CURRENT_TIMESTAMP, lastUpdateBy = ? WHERE customerName = ?");
                 pState.setString(1, name);
-                pState.setString(2, rc);
+                pState.setInt(2, rAdd);
                 pState.setInt(3, 1);
                 pState.setString(4, LoginController.currentUser);
-                pState.setString(5, LoginController.currentUser);
-                int result = pState.executeUpdate();
-                System.out.println("Pass 4");
+                pState.setString(5, oldName);
+                pState.executeUpdate();
+                
+                //Go back to customers window
+                Parent customersCancel = FXMLLoader.load(getClass().getResource("Customers.fxml"));
+                Scene scene = new Scene(customersCancel);
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.setScene(scene);
+                window.show();
+                    }
+                }
             } catch (SQLException e) {
                 System.out.println("SQL error");
             }
@@ -171,7 +182,31 @@ public class UpdateCustomerController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        //get list and field data
+        customer = getCustomerList().get(updateCustomerIndex);
+        String customerName = customer.getCustomerName();
+        String address = customer.getAddress();
+        String addressTwo = customer.getAddressTwo();
+        String city = customer.getCity();
+        String postal = customer.getPostal();
+        String country = customer.getCountry();
+        String phone = customer.getPhone();
+        //update fields
+        mCustNameField.setText(customerName);
+        mCustAddressField.setText(address);
+        mCustAddressContField.setText(addressTwo);
+        mCustCityField.setText(city);
+        mCustPostalField.setText(postal);
+        mCustCountryField.setText(country);
+        mCustPhoneField.setText(phone);
+        //set old info for reference
+        oldCustData(customerName, address, phone);
     }    
     
+    //make variables from old info
+    public void oldCustData(String name, String address, String phone){
+       oldName = name;
+       oldAddress = address;
+       oldPhone = phone;
+    }
 }
