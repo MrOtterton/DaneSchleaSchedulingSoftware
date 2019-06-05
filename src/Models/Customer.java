@@ -14,10 +14,10 @@ import javafx.collections.ObservableList;
  * @author Dane Schlea
  */
 public class Customer {
-    private String customerID;
+    private Integer customerID;
     private String customerName;
-    private String addressID;
-    private String custActive;
+    private Integer addressID;
+    private Integer custActive;
     private static ObservableList<Customer> customerList = FXCollections.observableArrayList();
     private String phone;
     private String address;
@@ -28,7 +28,7 @@ public class Customer {
     
     //Constructor
     
-    public Customer(String customerID, String customerName, String addressID, String custActive){
+    public Customer(Integer customerID, String customerName, Integer addressID, Integer custActive){
     this.customerID = customerID;
     this.customerName = customerName;
     this.addressID = addressID;
@@ -75,7 +75,7 @@ public class Customer {
         return country;
     }
     
-    public String getCustomerID() {
+    public Integer getCustomerID() {
         return customerID;
     }
 
@@ -83,11 +83,11 @@ public class Customer {
         return customerName;
     }
 
-    public String getAddressID() {
+    public Integer getAddressID() {
         return addressID;
     }
 
-    public String getCusActive() {
+    public Integer getCusActive() {
         return custActive;
     }
 
@@ -123,7 +123,7 @@ public class Customer {
     
     
     
-    public void setCustomerID(String customerID) {
+    public void setCustomerID(Integer customerID) {
         this.customerID = customerID;
     }
 
@@ -131,19 +131,19 @@ public class Customer {
         this.customerName = customerName;
     }
 
-    public void setAddressID(String addressID) {
+    public void setAddressID(Integer addressID) {
         this.addressID = addressID;
     }
 
-    public void setCusActive(String cusActive) {
+    public void setCusActive(Integer cusActive) {
         this.custActive = cusActive;
     }
     
-    public static String customerValidate(String customerName, String errorMessage) throws IOException{
-        if(customerName == null){
-            errorMessage = errorMessage + "Invalid name.";
+    public static Boolean customerValidate(String customerName) throws IOException{
+        if(customerName.isEmpty()){
+            return false;
         }
-        return errorMessage = "";
+        return true;
     }
     
 }

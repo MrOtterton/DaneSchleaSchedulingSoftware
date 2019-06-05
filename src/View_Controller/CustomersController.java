@@ -41,6 +41,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import static javax.swing.UIManager.getInt;
 
 /**
  * FXML Controller class
@@ -101,7 +102,7 @@ public class CustomersController implements Initializable {
     //add customer
     @FXML
     private void addCustomerHandler(ActionEvent event) throws IOException {
-        Parent addCustomerParent = FXMLLoader.load(getClass().getResource("ManageCustomer.fxml"));
+        Parent addCustomerParent = FXMLLoader.load(getClass().getResource("AddCustomer.fxml"));
         Scene addCustomerScene = new Scene(addCustomerParent);
         Stage addCustomerStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         addCustomerStage.setScene(addCustomerScene);
@@ -129,6 +130,7 @@ public class CustomersController implements Initializable {
      * Initializes the controller class.
      * @param url
      * @param rb
+     * Used lambdas to simplify setting of cell values
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -186,9 +188,16 @@ public class CustomersController implements Initializable {
     private void deleteCustomer(Customer customerSelected) {
         try{
             dbConnect();
-            PreparedStatement prepDel = getConn().prepareStatement("DELETE customer.*, address.* FROM customer, address WHERE customer.customerId = ? AND customer.addressId = address.addressId");
-            prepDel.setString(1, customerSelected.getCustomerID());
-            prepDel.executeUpdate();
+            PreparedStatement cust = getConn().prepareStatement("SELECT customerId FROM customer WHERE customerName = ?");
+                cust.setString(1, customerSelected.getCustomerName());
+                ResultSet resCust = cust.executeQuery();
+                while(resCust.next()){
+                    int rCust = (int) resCust.getObject("customerId");
+            
+                PreparedStatement prepDel = getConn().prepareStatement("DELETE customer.*, address.* FROM customer, address WHERE customer.customerId = ? AND customer.addressId = address.addressId");
+                prepDel.setInt(1, rCust);
+                prepDel.executeUpdate();
+            }
         } catch (SQLException ex) {
             System.out.println("SQL issue with deletion");
         }

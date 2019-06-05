@@ -12,39 +12,39 @@ import java.io.IOException;
  * @author Dane Schlea
  */
 public class City {
-    private String cityID;
+    private Integer cityID;
     private String city;
-    private String countryID;
+    private Integer countryID;
 
     //Constructors
-    public City(String cityID, String city, String countryID) {
+    public City(Integer cityID, String city, Integer countryID) {
         this.cityID = cityID;
         this.city = city;
         this.countryID = countryID;
     }
     
-    public City(String cityID, String city){
+    public City(Integer cityID, String city){
         this.cityID = cityID;
         this.city = city;
     }
     
     //Getter
 
-    public String getCityID() {
-        return cityID;
+    public Integer getCityID() {
+        return this.cityID;
     }
 
     public String getCity() {
-        return city;
+        return this.city;
     }
 
-    public String getCountryID() {
-        return countryID;
+    public Integer getCountryID() {
+        return this.countryID;
     }
     
     //Setter
 
-    public void setCityID(String cityID) {
+    public void setCityID(Integer cityID) {
         this.cityID = cityID;
     }
 
@@ -52,15 +52,17 @@ public class City {
         this.city = city;
     }
 
-    public void setCountryID(String countryID) {
+    public void setCountryID(Integer countryID) {
         this.countryID = countryID;
     }
     
-    public static String cityValidate(String city, String errorMessage) throws IOException{
-        if(city == null){
-            errorMessage = errorMessage + "Invalid city.";
+    public static Boolean cityValidate(String city) throws IOException{
+        if(city.equals("New York") || city.equals("Los Angeles") || city.equals("Houston") || city.equals("Salt Lake City") 
+                || city.equals("Lancaster") || city.equals("London") || city.equals("Glasgow") || city.equals("Toronto") 
+                || city.equals("Vancouver") || city.equals("Ottawa") || city.equals("Oslo") || city.equals("Bergen") || city.equals("Trondheim")){
+            return true;
         }
-        return errorMessage = "";
+        return false;
     }
     
 }

@@ -12,16 +12,16 @@ import java.io.IOException;
  * @author Dane Schlea
  */
 public class Address {
-    private String addressID;
+    private Integer addressID;
     private String address;
     private String addressTwo;
-    private String cityID;
+    private Integer cityID;
     private String postalCode;
     private String phone;
 
     //Constructor
     
-    public Address(String addressID, String address, String addressTwo, String cityID, String postalCode, String phone) {
+    public Address(Integer addressID, String address, String addressTwo, Integer cityID, String postalCode, String phone) {
         this.addressID = addressID;
         this.address = address;
         this.addressTwo = addressTwo;
@@ -32,7 +32,7 @@ public class Address {
     
     //Getter
 
-    public String getAddressID() {
+    public Integer getAddressID() {
         return addressID;
     }
 
@@ -44,7 +44,7 @@ public class Address {
         return addressTwo;
     }
 
-    public String getCityID() {
+    public Integer getCityID() {
         return cityID;
     }
 
@@ -58,7 +58,7 @@ public class Address {
     
     //Setter
 
-    public void setAddressID(String addressID) {
+    public void setAddressID(Integer addressID) {
         this.addressID = addressID;
     }
 
@@ -70,7 +70,7 @@ public class Address {
         this.addressTwo = addressTwo;
     }
 
-    public void setCityID(String cityID) {
+    public void setCityID(Integer cityID) {
         this.cityID = cityID;
     }
 
@@ -84,16 +84,16 @@ public class Address {
     
     //Address validation
     
-    public static String addressValidate(String address, String postalCode, String phone, String errorMessage) throws IOException{
-        if(address == null){
-            errorMessage = errorMessage + "Invalid address.";
+    public static Boolean addressValidate(String address, String postalCode, String phone) throws IOException{
+        if(address.isEmpty()){
+            return false;
         }
-        else if(postalCode == null){
-            errorMessage = errorMessage + "Invalid postal code.";
+        else if(postalCode.isEmpty()){
+            return false;
         }
-        else if(phone == null){
-            errorMessage = errorMessage + "Invalid phone.";
+        else if(phone.isEmpty()){
+            return false;
         }
-        return errorMessage = "";
+        return true;
     }
 }

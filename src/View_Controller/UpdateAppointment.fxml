@@ -10,21 +10,21 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="468.0" prefWidth="500.0" style="-fx-background-color: #2e2b61;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.ManageAppointmentController">
+<AnchorPane id="AnchorPane" prefHeight="468.0" prefWidth="500.0" style="-fx-background-color: #2e2b61;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.AddAppointmentController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3f3d57" height="60.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="500.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3f3d57" height="60.0" layoutY="427.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="500.0" />
-      <Label fx:id="labelManApp" layoutX="14.0" layoutY="18.0" text="Manage Appointment" textFill="WHITE">
+      <Label fx:id="labelManApp" layoutX="14.0" layoutY="18.0" text="Update Appointment" textFill="WHITE">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <Button fx:id="mAppSave" layoutX="303.0" layoutY="442.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Save">
+      <Button fx:id="uAppSave" layoutX="303.0" layoutY="442.0" mnemonicParsing="false" onAction="#handleUpdateAppointmentSave" prefHeight="25.0" prefWidth="80.0" text="Save">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="mAppCancel" layoutX="398.0" layoutY="442.0" mnemonicParsing="false" onAction="#handleManageAppointmentCancel" prefHeight="25.0" prefWidth="80.0" text="Cancel">
+      <Button fx:id="uAppCancel" layoutX="398.0" layoutY="442.0" mnemonicParsing="false" onAction="#handleUpdateAppointmentCancel" prefHeight="25.0" prefWidth="80.0" text="Cancel">
          <font>
             <Font size="14.0" />
          </font>

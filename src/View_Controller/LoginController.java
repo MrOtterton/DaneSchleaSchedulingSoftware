@@ -62,7 +62,7 @@ public class LoginController implements Initializable {
     
     //Reference items
     User user = new User();
-    private static String currentUser;
+    static String currentUser;
 
     @FXML
     void handleLoginExit(ActionEvent event){
@@ -134,7 +134,7 @@ public class LoginController implements Initializable {
             if(loginRes.next()){
                 user.setUserName(loginRes.getString("userName"));
                 user.setPassword(loginRes.getString("password"));
-                user.setUserID(loginRes.getString("userID"));
+                user.setUserID(loginRes.getInt("userId"));
                 Logger.log(userName, true);
             }
             else{

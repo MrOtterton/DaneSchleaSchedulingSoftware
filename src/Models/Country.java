@@ -12,17 +12,17 @@ import java.io.IOException;
  * @author Dane Schlea
  */
 public class Country {
-    private String countryID;
+    private Integer countryID;
     private String country;
     
-    public Country(String countryID, String country){
+    public Country(Integer countryID, String country){
         this.countryID = countryID;
         this.country = country;
     }
     
     //Getter
     
-    public String getCountryID(){
+    public Integer getCountryID(){
         return countryID;
     }
     
@@ -32,7 +32,7 @@ public class Country {
     
     //Setter
     
-    public void setCountryID(String countryID){
+    public void setCountryID(Integer countryID){
         this.countryID = countryID;
     }
     
@@ -40,10 +40,10 @@ public class Country {
         this.country = country;
     }
     
-    public static String countryValidate(String country, String errorMessage) throws IOException{
-        if(country == null){
-            errorMessage = errorMessage + "Invalid country.";
+    public static Boolean countryValidate(String country) throws IOException{
+        if(country.equals("US") || country.equals("UK") || country.equals("Canada") || country.equals("Norway")){
+            return true;
         }
-        return errorMessage = "";
+        return false;
     }
 }

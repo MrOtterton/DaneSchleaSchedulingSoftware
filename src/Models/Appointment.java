@@ -15,9 +15,9 @@ import java.time.LocalTime;
  * @author Dane Schlea
  */
 public class Appointment {
-    private int appointmentID;
-    private int customerID;
-    private int userID;
+    private Integer appointmentID;
+    private Integer customerID;
+    private Integer userID;
     private String title;
     private String description;
     private String location;
@@ -26,7 +26,7 @@ public class Appointment {
     private LocalDateTime start;
     private LocalDateTime end;
 
-    public Appointment(int appointmentID, int customerID, int userID, String title, String description, String location, String contact, String url, LocalDateTime start, LocalDateTime end) {
+    public Appointment(Integer appointmentID, Integer customerID, Integer userID, String title, String description, String location, String contact, String url, LocalDateTime start, LocalDateTime end) {
         this.appointmentID = appointmentID;
         this.customerID = customerID;
         this.userID = userID;
@@ -41,15 +41,15 @@ public class Appointment {
     
     //Getter
 
-    public int getAppointmentID() {
+    public Integer getAppointmentID() {
         return appointmentID;
     }
 
-    public int getCustomerID() {
+    public Integer getCustomerID() {
         return customerID;
     }
 
-    public int getUserID() {
+    public Integer getUserID() {
         return userID;
     }
 
@@ -83,15 +83,15 @@ public class Appointment {
     
     //Setter
 
-    public void setAppointmentID(int appointmentID) {
+    public void setAppointmentID(Integer appointmentID) {
         this.appointmentID = appointmentID;
     }
 
-    public void setCustomerID(int customerID) {
+    public void setCustomerID(Integer customerID) {
         this.customerID = customerID;
     }
 
-    public void setUserID(int userID) {
+    public void setUserID(Integer userID) {
         this.userID = userID;
     }
 
@@ -123,42 +123,42 @@ public class Appointment {
         this.end = end;
     }
     
-    public static String appointmentValidate(String title, String description, String location, String contact, String url, LocalDateTime start, LocalDateTime end, String errorMessage) throws IOException{
+    public static Boolean appointmentValidate(String title, String description, String location, String contact, String url, LocalDateTime start, LocalDateTime end) throws IOException{
         LocalDate startDate = start.toLocalDate();
         LocalDate endDate = end.toLocalDate();
-        int dayOfWeek = startDate.getDayOfWeek().getValue();
+        Integer dayOfWeek = startDate.getDayOfWeek().getValue();
         
         LocalTime startTime = start.toLocalTime();
         LocalTime endTime = end.toLocalTime();
         
-        if(title == null){
-           return errorMessage = errorMessage + "Invalid title.";
+        if(title.isEmpty()){
+           return false;
        }
-       else if(description == null){
-           return errorMessage = errorMessage + "Invalid description.";
+       else if(description.isEmpty()){
+           return false;
        }
-       else if(location == null){
-           return errorMessage = errorMessage + "Invalid location.";
+       else if(location.isEmpty()){
+           return false;
        }
-       else if(contact == null){
-           return errorMessage = errorMessage + "Invalid contact.";
+       else if(contact.isEmpty()){
+           return false;
        }
-       else if(url == null){
-           return errorMessage = errorMessage + "Invalid url.";
+       else if(url.isEmpty()){
+           return false;
        }
        else if(start == end || start == null || end == null){
-           return errorMessage = errorMessage + "Invalid times.";
+           return false;
        }
        else if(startDate != endDate){
-           return errorMessage = errorMessage + "Appointments cannot span multiple days.";
+           return false;
        }
        else if(dayOfWeek == 0 || dayOfWeek == 6){
-           return errorMessage = errorMessage + "Can not schedule weekend appointments.";
+           return false;
        }
        else if(startTime.isAfter(endTime)){
-           return errorMessage = errorMessage + "Can not set start before end.";
+           return false;
        }
-        return errorMessage = "";
+        return true;
     }
     
 }

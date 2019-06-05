@@ -11,14 +11,14 @@ package Models;
  * @author Dane Schlea
  */
 public class User {
-    private String userID;
+    private Integer userID;
     private String userName;
     private String password;
-    private String userActive;
+    private Integer userActive;
     
     //Constructor
     
-    public User(String userID, String userName, String password, String userActive){
+    public User(Integer userID, String userName, String password, Integer userActive){
         this.userID = userID;
         this.userName = userName;
         this.password = password;
@@ -31,7 +31,7 @@ public class User {
     
     //Getters
 
-    public String getUserID() {
+    public Integer getUserID() {
         return userID;
     }
 
@@ -43,13 +43,13 @@ public class User {
         return password;
     }
 
-    public String getUserActive() {
+    public Integer getUserActive() {
         return userActive;
     }
     
     //Setters
 
-    public void setUserID(String userID) {
+    public void setUserID(Integer userID) {
         this.userID = userID;
     }
 
@@ -61,7 +61,7 @@ public class User {
         this.password = password;
     }
 
-    public void setUserActive(String userActive) {
+    public void setUserActive(Integer userActive) {
         this.userActive = userActive;
     }
     
