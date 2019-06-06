@@ -6,10 +6,28 @@
 package View_Controller;
 
 import Models.Appointment;
+import Models.Customer;
+import static Models.Customer.setCustomerList;
+import static Util.mainDB.dbConnect;
+import static Util.mainDB.getConn;
+import static View_Controller.LoginController.currentUser;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
@@ -27,6 +45,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -41,15 +60,19 @@ public class ReportsController implements Initializable {
     @FXML
     private Button reportsClose;
     @FXML
+    private Button scheduleBoxButton;
+    @FXML
     private TabPane mainReportsTab;
     @FXML
     private Tab scheduleTab;
     @FXML
+    private ChoiceBox<String> scheduleBox;
+    @FXML
     private TableView<Appointment> reportView;
     @FXML
-    private TableColumn<Appointment, String> reportStartView;
+    private TableColumn<Appointment, ZonedDateTime> reportStartView;
     @FXML
-    private TableColumn<Appointment, String> reportEndView;
+    private TableColumn<Appointment, ZonedDateTime> reportEndView;
     @FXML
     private TableColumn<Appointment, String> reportLocView;
     @FXML
@@ -63,9 +86,9 @@ public class ReportsController implements Initializable {
     @FXML
     private Label labelTypesType;
     @FXML
-    private ChoiceBox<?> typesMonth;
+    private ChoiceBox<String> typesMonth;
     @FXML
-    private ChoiceBox<?> typesType;
+    private ChoiceBox<String> typesType;
     @FXML
     private Button typesSubmit;
     @FXML
@@ -75,7 +98,7 @@ public class ReportsController implements Initializable {
     @FXML
     private Tab locationTab;
     @FXML
-    private ChoiceBox<?> locationLoc;
+    private ChoiceBox<String> locationLoc;
     @FXML
     private Label labelLocationLoc;
     @FXML
@@ -86,6 +109,11 @@ public class ReportsController implements Initializable {
     private TextField locationNumbField;
     @FXML
     private Label labelReports;
+    
+    private ObservableList<Appointment> userSchedule;
+    private final ZoneId zID = ZoneId.systemDefault();
+    private final DateTimeFormatter dateTF = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT);
+    String thisUser;
     
     @FXML
     private void handleReportsCancel(ActionEvent event) throws IOException{
@@ -113,7 +141,100 @@ public class ReportsController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        //scheduleBox items - choicebox 1st tab
+        scheduleBox.getItems().add("test");
+        scheduleBox.getItems().add("test2");
+        scheduleBox.setValue("test");
+        
+        //typesMonth items - choicebox 2nd tab
+        typesMonth.getItems().add("01");
+        typesMonth.getItems().add("02");
+        typesMonth.getItems().add("03");
+        typesMonth.getItems().add("04");
+        typesMonth.getItems().add("05");
+        typesMonth.getItems().add("06");
+        typesMonth.getItems().add("07");
+        typesMonth.getItems().add("08");
+        typesMonth.getItems().add("09");
+        typesMonth.getItems().add("10");
+        typesMonth.getItems().add("11");
+        typesMonth.getItems().add("12");
+        typesMonth.setValue("01");
+        
+        //typesType items - choicebox 2nd tab
+        typesType.getItems().add("Initial Consultation");
+        typesType.getItems().add("Consultation");
+        typesType.getItems().add("Final Consultation");
+        typesType.setValue("Initial Consultation");
+        
+        //locationLoc items - choicebox 3rd tab
+        locationLoc.getItems().add("New York");
+        locationLoc.getItems().add("Los Angeles");
+        locationLoc.getItems().add("Houston");
+        locationLoc.getItems().add("Salt Lake City");
+        locationLoc.getItems().add("Lancaster");
+        locationLoc.getItems().add("London");
+        locationLoc.getItems().add("Glasgow");
+        locationLoc.getItems().add("Toronto");
+        locationLoc.getItems().add("Vancouver");
+        locationLoc.getItems().add("Ottawa");
+        locationLoc.getItems().add("Oslo");
+        locationLoc.getItems().add("Bergen");
+        locationLoc.getItems().add("Trondheim");
+        locationLoc.setValue("New York");
     }    
     
+    //retrieve the specified user schedule
+    public void scheduleBoxSelect() throws IOException{
+        thisUser = scheduleBox.getValue();
+
+        populateUserSchedule();
+        reportStartView.setCellValueFactory(new PropertyValueFactory<>("start"));
+        reportEndView.setCellValueFactory(new PropertyValueFactory<>("end"));
+        reportLocView.setCellValueFactory(new PropertyValueFactory<>("location"));
+        reportCustView.setCellValueFactory(new PropertyValueFactory<>("customer"));
+        reportPhoneView.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        
+    }
+    
+    //method to populate the appointments for the selected user
+    private void populateUserSchedule() {
+        userSchedule = FXCollections.observableArrayList();
+        
+        try{
+        dbConnect();
+        PreparedStatement userST = getConn().prepareStatement("SELECT appointment.appointmentId, appointment.customerId, appointment.start, appointment.end, appointment.createdBy, "
+                + "appointment.location, customer.customerId, customer.customerName, customer.addressId, address.phone, address.addressId "
+                + "FROM appointment, customer, address "
+                + "WHERE appointment.customerId = customer.customerId AND customer.addressId = address.addressId AND appointment.start >= CURRENT_DATE AND appointment.createdBy = ?");
+            userST.setString(1, thisUser);
+            ResultSet us = userST.executeQuery();
+           
+            
+            while (us.next()) {
+                
+                Timestamp userStart = us.getTimestamp("appointment.start");
+                ZonedDateTime zIDStart = userStart.toLocalDateTime().atZone(ZoneId.of("UTC"));
+        	ZonedDateTime userLocalStart = zIDStart.withZoneSameInstant(zID);
+
+                Timestamp userEnd = us.getTimestamp("appointment.end");
+                ZonedDateTime zIDEnd = userEnd.toLocalDateTime().atZone(ZoneId.of("UTC"));
+        	ZonedDateTime userLocalEnd = zIDEnd.withZoneSameInstant(zID);
+
+                String userLoc = us.getString("appointment.location");
+                String custName = us.getString("customer.customerName");
+                String custPhone = us.getString("address.phone");
+                      
+                userSchedule.add(new Appointment(userLocalStart.format(dateTF), userLocalEnd.format(dateTF), userLoc, custName, custPhone));
+                
+
+            }
+            
+        } catch (SQLException se) {
+            System.out.println("SQL error");
+        } catch (Exception e) {
+            System.out.println("Non-SQL error");
+        }
+        reportView.getItems().setAll(userSchedule);
+    }
 }

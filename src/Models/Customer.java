@@ -29,10 +29,10 @@ public class Customer {
     //Constructor
     
     public Customer(Integer customerID, String customerName, Integer addressID, Integer custActive){
-    this.customerID = customerID;
-    this.customerName = customerName;
-    this.addressID = addressID;
-    this.custActive = custActive;
+        this.customerID = customerID;
+        this.customerName = customerName;
+        this.addressID = addressID;
+        this.custActive = custActive;
     }
     
     public Customer(String customerName, String phone, String address, String addressTwo, String city, String postal, String country){

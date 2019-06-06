@@ -19,7 +19,7 @@
       <Button fx:id="reportsClose" layoutX="509.0" layoutY="358.0" mnemonicParsing="false" onAction="#handleReportsCancel" prefHeight="31.0" prefWidth="62.0" text="Close" />
       <TabPane fx:id="mainReportsTab" layoutY="53.0" prefHeight="291.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab fx:id="scheduleTab" text="Your Schedule">
+          <Tab fx:id="scheduleTab" text="User Schedule">
                <content>
                   <TableView fx:id="reportView" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #d0cfe4;">
                     <columns>
@@ -59,7 +59,7 @@
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab fx:id="locationTab" text="Appointments per Location">
+            <Tab fx:id="locationTab" text="Total Appointments per Location">
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
@@ -85,6 +85,13 @@
       <Label fx:id="labelReports" layoutX="14.0" layoutY="14.0" text="Reports" textFill="WHITE">
          <font>
             <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <ChoiceBox fx:id="scheduleBox" layoutX="143.0" layoutY="362.0" prefHeight="25.0" prefWidth="106.0" />
+      <Button fx:id="scheduleBoxButton" layoutX="261.0" layoutY="361.0" mnemonicParsing="false" onAction="#scheduleBoxSelect" text="Submit" />
+      <Label layoutX="14.0" layoutY="364.0" text="Schedule Selector:" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="14.0" />
          </font>
       </Label>
    </children>

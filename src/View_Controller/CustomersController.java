@@ -159,7 +159,8 @@ public class CustomersController implements Initializable {
      * Initializes the controller class.
      * @param url
      * @param rb
-     * Used lambdas to simplify setting of cell values
+     * 
+     * Used lambdas to simplify setting of cell values in the table view for function and readability
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {

@@ -89,7 +89,7 @@ public class AppointmentsController implements Initializable {
     
     @FXML
     private void addAppointmentHandler(ActionEvent event) throws IOException {
-        Parent addAppointmentParent = FXMLLoader.load(getClass().getResource("ManageAppointment.fxml"));
+        Parent addAppointmentParent = FXMLLoader.load(getClass().getResource("AddAppointment.fxml"));
         Scene addAppointmentScene = new Scene(addAppointmentParent);
         Stage addAppointmentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         addAppointmentStage.setScene(addAppointmentScene);
@@ -99,6 +99,8 @@ public class AppointmentsController implements Initializable {
     
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {

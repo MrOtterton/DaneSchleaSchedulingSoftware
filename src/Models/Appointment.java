@@ -23,10 +23,12 @@ public class Appointment {
     private String location;
     private String contact;
     private String url;
-    private LocalDateTime start;
-    private LocalDateTime end;
+    private String start;
+    private String end;
+    private String customer;
+    private String phone;
 
-    public Appointment(Integer appointmentID, Integer customerID, Integer userID, String title, String description, String location, String contact, String url, LocalDateTime start, LocalDateTime end) {
+    public Appointment(Integer appointmentID, Integer customerID, Integer userID, String title, String description, String location, String contact, String url, String start, String end) {
         this.appointmentID = appointmentID;
         this.customerID = customerID;
         this.userID = userID;
@@ -39,46 +41,62 @@ public class Appointment {
         this.end = end;
     }
     
+    public Appointment(String start, String end, String location, String customer, String phone){
+        this.start = start;
+        this.end = end;
+        this.location = location;
+        this.customer = customer;
+        this.phone = phone;
+    }
+    
     //Getter
 
+    public String getCustomer(){
+        return this.customer;
+    }
+    
+    public String getPhone(){
+        return this.phone;
+    }
+    
     public Integer getAppointmentID() {
-        return appointmentID;
+        return this.appointmentID;
     }
 
     public Integer getCustomerID() {
-        return customerID;
+        return this.customerID;
     }
 
     public Integer getUserID() {
-        return userID;
+        return this.userID;
     }
 
     public String getTitle() {
-        return title;
+        return this.title;
     }
 
     public String getDescription() {
-        return description;
+        return this.description;
     }
 
     public String getLocation() {
-        return location;
+        return this.location;
     }
 
     public String getContact() {
-        return contact;
+        return this.contact;
     }
 
     public String getUrl() {
-        return url;
+        return this.url;
     }
 
-    public LocalDateTime getStart() {
-        return start;
+    public String getStart() {
+        return this.start;
     }
 
-    public LocalDateTime getEnd() {
-        return end;
+    public String getEnd() {
+        return this.end;
     }
     
     //Setter
@@ -115,11 +133,11 @@ public class Appointment {
         this.url = url;
     }
 
-    public void setStart(LocalDateTime start) {
+    public void setStart(String start) {
         this.start = start;
     }
 
-    public void setEnd(LocalDateTime end) {
+    public void setEnd(String end) {
         this.end = end;
     }
     
