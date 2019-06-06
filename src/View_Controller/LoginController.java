@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -41,8 +42,6 @@ import javafx.stage.Stage;
  */
 public class LoginController implements Initializable {
     
-    ResourceBundle rb;
-    
     //UI items
     @FXML
     private Label labelLogin;
@@ -62,13 +61,15 @@ public class LoginController implements Initializable {
     //Reference items
     User user = new User();
     static String currentUser;
+    Locale uLocale;
+    ResourceBundle rb;
 
     @FXML
     void handleLoginExit(ActionEvent event){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.initModality(Modality.NONE);
-        alert.setTitle("Exit");
-        alert.setHeaderText("Confirm exit.");
+        alert.setTitle(this.rb.getString("exit"));
+        alert.setHeaderText(this.rb.getString("confirmExit"));
         alert.showAndWait()
             .filter(response -> response == ButtonType.OK)
             .ifPresent(response -> System.exit(0));
@@ -85,9 +86,9 @@ public class LoginController implements Initializable {
                 if(checkappt15(thisUser) == true){
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.initModality(Modality.NONE);
-                    alert.setTitle("Reminder");
-                    alert.setHeaderText("Appointment Reminder");
-                    alert.setContentText("You have an appointment in the next 15 minutes. Please check your schedule.");
+                    alert.setTitle(this.rb.getString("reminder"));
+                    alert.setHeaderText(this.rb.getString("AppointmentReminder"));
+                    alert.setContentText(this.rb.getString("reminderText"));
                     Optional<ButtonType> result = alert.showAndWait();
                 }
                 showMenu(event);
@@ -99,10 +100,18 @@ public class LoginController implements Initializable {
     
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        this.uLocale = Locale.getDefault();
+        this.rb = ResourceBundle.getBundle("Resources/loginRB", this.uLocale);
+        labelLogin.setText(this.rb.getString("login"));
+        labelUserName.setText(this.rb.getString("username"));
+        labelPassword.setText(this.rb.getString("password"));
+        loginExit.setText(this.rb.getString("exit"));
+        loginSubmit.setText(this.rb.getString("submit"));
     }    
     
     private static void setCurrentUser(String userName){
@@ -118,8 +127,8 @@ public class LoginController implements Initializable {
     User loginValidation(String userName, String password) throws IOException{
         if(userName == null || password == null){
             Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Invalid login - exiting program.");
+                alert.setTitle(this.rb.getString("Error"));
+                alert.setHeaderText(this.rb.getString("Invalid"));
                 alert.showAndWait()
                     .filter(response -> response == ButtonType.OK)
                     .ifPresent(response -> System.exit(0));
@@ -138,8 +147,8 @@ public class LoginController implements Initializable {
             }
             else{
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Invalid login - exiting program.");
+                alert.setTitle(this.rb.getString("Error"));
+                alert.setHeaderText(this.rb.getString("Invalid"));
                 alert.showAndWait()
                     .filter(response -> response == ButtonType.OK)
                     .ifPresent(response -> System.exit(0));
