@@ -149,6 +149,12 @@ public class ReportsController implements Initializable {
         
         monthTypeResult();
     }
+    
+    public void locationHandler() throws IOException{
+        numbLoc = locationLoc.getValue();
+        
+        locationResult();
+    }
 
     /**
      * Initializes the controller class.
@@ -268,8 +274,29 @@ public class ReportsController implements Initializable {
                 typeCount++;
             }
             typesNumberField.setText(Integer.toString(typeCount));
+            
         } catch (SQLException se) {
             System.out.println("SQL error");
+        }
+    }
+
+    //calculate total amount of appts at a single location
+    private void locationResult() {
+       dbConnect();
+       try{
+           PreparedStatement locStat = getConn().prepareStatement("SELECT * "
+               + "FROM appointment WHERE appointment.location = ?");
+           locStat.setString(1, numbLoc);
+           ResultSet locSet = locStat.executeQuery();
+           
+           int locCount = 0;
+           while(locSet.next()){
+               locCount++;
+           }
+           locationNumbField.setText(Integer.toString(locCount));
+           
+       } catch (SQLException se) {
+           System.out.println("SQL error");
         }
     }
 }

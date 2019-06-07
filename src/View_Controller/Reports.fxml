@@ -69,7 +69,7 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <Button fx:id="locationSubmit" layoutX="281.0" layoutY="36.0" mnemonicParsing="false" text="Submit" />
+                        <Button fx:id="locationSubmit" layoutX="281.0" layoutY="36.0" mnemonicParsing="false" onAction="#locationHandler" text="Submit" />
                         <Label fx:id="labelLocationNumb" layoutX="36.0" layoutY="98.0" text="Number of Appointments:" textFill="WHITE">
                            <font>
                               <Font size="14.0" />
