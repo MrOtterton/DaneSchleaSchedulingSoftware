@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
@@ -10,21 +10,21 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="468.0" prefWidth="500.0" style="-fx-background-color: #2e2b61;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.AddAppointmentController">
+<AnchorPane id="AnchorPane" prefHeight="428.0" prefWidth="500.0" style="-fx-background-color: #2e2b61;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.AddAppointmentController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3f3d57" height="60.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="500.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3f3d57" height="60.0" layoutY="427.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="500.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3f3d57" height="60.0" layoutY="385.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="500.0" />
       <Label fx:id="labelManApp" layoutX="14.0" layoutY="18.0" text="Add Appointment" textFill="WHITE">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <Button fx:id="mAppSave" layoutX="303.0" layoutY="442.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Save">
+      <Button fx:id="mAppSave" layoutX="303.0" layoutY="400.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Save">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="mAppCancel" layoutX="398.0" layoutY="442.0" mnemonicParsing="false" onAction="#handleManageAppointmentCancel" prefHeight="25.0" prefWidth="80.0" text="Cancel">
+      <Button fx:id="mAppCancel" layoutX="398.0" layoutY="400.0" mnemonicParsing="false" onAction="#handleManageAppointmentCancel" prefHeight="25.0" prefWidth="80.0" text="Cancel">
          <font>
             <Font size="14.0" />
          </font>
@@ -49,22 +49,17 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="labelAppCon" layoutX="15.0" layoutY="260.0" text="Contact" textFill="WHITE">
+      <Label fx:id="labelAppUrl" layoutX="15.0" layoutY="262.0" text="URL" textFill="WHITE">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="labelAppUrl" layoutX="15.0" layoutY="304.0" text="URL" textFill="WHITE">
+      <Label fx:id="labelAppStart" layoutX="15.0" layoutY="300.0" text="Appt Start" textFill="WHITE">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="labelAppStart" layoutX="15.0" layoutY="342.0" text="Appt Start" textFill="WHITE">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label fx:id="labelAppEnd" layoutX="15.0" layoutY="382.0" text="Appt End" textFill="WHITE">
+      <Label fx:id="labelAppEnd" layoutX="15.0" layoutY="340.0" text="Appt End" textFill="WHITE">
          <font>
             <Font size="14.0" />
          </font>
@@ -72,12 +67,11 @@
       <TextField fx:id="mAppNameField" layoutX="150.0" layoutY="71.0" prefHeight="25.0" prefWidth="213.0" />
       <TextField fx:id="mAppTitleField" layoutX="150.0" layoutY="110.0" prefHeight="25.0" prefWidth="306.0" />
       <TextArea fx:id="mAppDescField" layoutX="150.0" layoutY="150.0" prefHeight="53.0" prefWidth="306.0" />
-      <TextField fx:id="mAppLocField" layoutX="150.0" layoutY="218.0" prefHeight="25.0" prefWidth="277.0" />
-      <TextField fx:id="mAppConField" layoutX="150.0" layoutY="258.0" />
-      <TextField fx:id="mAppURLField" layoutX="150.0" layoutY="301.0" />
-      <DatePicker fx:id="mAppDateStart" layoutX="150.0" layoutY="340.0" prefHeight="25.0" prefWidth="126.0" showWeekNumbers="true" />
-      <DatePicker fx:id="mAppDateEnd" layoutX="150.0" layoutY="380.0" prefHeight="25.0" prefWidth="126.0" />
-      <ComboBox fx:id="mAppStart" layoutX="287.0" layoutY="340.0" prefHeight="25.0" prefWidth="111.0" promptText="Start time" />
-      <ComboBox fx:id="mAppEnd" layoutX="286.0" layoutY="380.0" prefHeight="25.0" prefWidth="111.0" promptText="End time" />
+      <TextField fx:id="mAppURLField" layoutX="150.0" layoutY="259.0" />
+      <DatePicker fx:id="mAppDateStart" layoutX="150.0" layoutY="298.0" prefHeight="25.0" prefWidth="126.0" showWeekNumbers="true" />
+      <DatePicker fx:id="mAppDateEnd" layoutX="150.0" layoutY="338.0" prefHeight="25.0" prefWidth="126.0" />
+      <ChoiceBox fx:id="mAppLoc" layoutX="150.0" layoutY="216.0" prefWidth="200.0" />
+      <ChoiceBox fx:id="mAppStart" layoutX="288.0" layoutY="298.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="mAppEnd" layoutX="288.0" layoutY="338.0" prefWidth="150.0" />
    </children>
 </AnchorPane>

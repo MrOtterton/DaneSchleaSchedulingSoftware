@@ -31,9 +31,9 @@
          </font>
       </Label>
       <Button fx:id="appAdd" layoutX="598.0" layoutY="64.0" mnemonicParsing="false" onAction="#addAppointmentHandler" prefHeight="25.0" prefWidth="55.0" text="Add" />
-      <Button fx:id="appUpdate" layoutX="660.0" layoutY="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="55.0" text="Update" />
-      <Button fx:id="appDelete" layoutX="722.0" layoutY="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="55.0" text="Delete" />
-      <RadioButton fx:id="appMonthly" layoutX="25.0" layoutY="68.0" mnemonicParsing="false" text="Upcoming Month" textFill="WHITE" />
-      <RadioButton fx:id="appWeekly" layoutX="165.0" layoutY="68.0" mnemonicParsing="false" text="Upcoming Week" textFill="WHITE" />
+      <Button fx:id="appUpdate" layoutX="660.0" layoutY="64.0" mnemonicParsing="false" onAction="#updateAppointmentHandler" prefHeight="25.0" prefWidth="55.0" text="Update" />
+      <Button fx:id="appDelete" layoutX="722.0" layoutY="64.0" mnemonicParsing="false" onAction="#deleteAppointmentHandler" prefHeight="25.0" prefWidth="55.0" text="Delete" />
+      <RadioButton fx:id="appMonthly" layoutX="25.0" layoutY="68.0" mnemonicParsing="false" onAction="#monthlyRadio" text="Upcoming Month" textFill="WHITE" />
+      <RadioButton fx:id="appWeekly" layoutX="165.0" layoutY="68.0" mnemonicParsing="false" onAction="#weeklyRadio" text="Upcoming Week" textFill="WHITE" />
    </children>
 </AnchorPane>

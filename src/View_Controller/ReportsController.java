@@ -233,7 +233,7 @@ public class ReportsController implements Initializable {
            
             
             while (us.next()) {
-                
+                //set timestamps to local time
                 Timestamp userStart = us.getTimestamp("appointment.start");
                 ZonedDateTime zIDStart = userStart.toLocalDateTime().atZone(ZoneId.of("UTC"));
         	ZonedDateTime userLocalStart = zIDStart.withZoneSameInstant(zID);

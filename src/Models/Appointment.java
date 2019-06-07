@@ -9,12 +9,16 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  *
  * @author Dane Schlea
  */
 public class Appointment {
+
+    private static ObservableList<Appointment> appointmentList = FXCollections.observableArrayList();
     private Integer appointmentID;
     private Integer customerID;
     private Integer userID;
@@ -27,6 +31,7 @@ public class Appointment {
     private String end;
     private String customer;
     private String phone;
+    private String user;
 
     public Appointment(Integer appointmentID, Integer customerID, Integer userID, String title, String description, String location, String contact, String url, String start, String end) {
         this.appointmentID = appointmentID;
@@ -49,10 +54,24 @@ public class Appointment {
         this.phone = phone;
     }
     
+    public Appointment(String start, String end, String title, String description, String location, String customer, String user){
+        this.start = start;
+        this.end = end;
+        this.location = location;
+        this.customer = customer;
+        this.title = title;
+        this.description = description;
+        this.user = user;
+    }
+    
     //Getter
 
     public String getCustomer(){
         return this.customer;
+    }
+    
+    public String getUser(){
+        return this.user;
     }
     
     public String getPhone(){
@@ -139,6 +158,22 @@ public class Appointment {
 
     public void setEnd(String end) {
         this.end = end;
+    }
+
+    public void setCustomer(String customer) {
+        this.customer = customer;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+    
+    public static void setAppointmentList(ObservableList<Appointment> appointmentList) {
+        Appointment.appointmentList = appointmentList;
     }
     
     public static Boolean appointmentValidate(String title, String description, String location, String contact, String url, LocalDateTime start, LocalDateTime end) throws IOException{

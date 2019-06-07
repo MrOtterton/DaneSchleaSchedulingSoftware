@@ -177,13 +177,7 @@ public class CustomersController implements Initializable {
     
     //Populate the TableView with customers information
     protected List<Customer> populateCustomers() {
-        String pCustName;
-        String pPhone;
-        String pAddress;
-        String pAddressTwo;
-        String pCity;
-        String pPostal;
-        String pCountry;
+
         //build the customer list
         ObservableList<Customer> customerList = FXCollections.observableArrayList();
         //connect to the db and pull customers info where it matches
@@ -197,13 +191,13 @@ public class CustomersController implements Initializable {
             
             ResultSet resSet = prepState.executeQuery();
             while(resSet.next()){
-                pCustName = resSet.getString("customer.customerName");
-                pPhone = resSet.getString("address.phone");
-                pAddress = resSet.getString("address.address");
-                pAddressTwo = resSet.getString("address.address2");
-                pCity = resSet.getString("city.city");
-                pPostal = resSet.getString("address.postalCode");
-                pCountry = resSet.getString("country.country");
+                String pCustName = resSet.getString("customer.customerName");
+                String pPhone = resSet.getString("address.phone");
+                String pAddress = resSet.getString("address.address");
+                String pAddressTwo = resSet.getString("address.address2");
+                String pCity = resSet.getString("city.city");
+                String pPostal = resSet.getString("address.postalCode");
+                String pCountry = resSet.getString("country.country");
                 
                 customerList.add(new Customer(pCustName, pPhone, pAddress, pAddressTwo, pCity, pPostal, pCountry));
                 setCustomerList(customerList);

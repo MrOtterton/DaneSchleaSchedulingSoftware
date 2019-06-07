@@ -19,6 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -50,8 +51,6 @@ public class UpdateAppointmentController implements Initializable {
     @FXML
     private Label labelAppLoc;
     @FXML
-    private Label labelAppCon;
-    @FXML
     private Label labelAppUrl;
     @FXML
     private Label labelAppStart;
@@ -64,9 +63,7 @@ public class UpdateAppointmentController implements Initializable {
     @FXML
     private TextArea mAppDescField;
     @FXML
-    private TextField mAppLocField;
-    @FXML
-    private TextField mAppConField;
+    private ChoiceBox<String> mAppLoc;
     @FXML
     private TextField mAppURLField;
     @FXML
@@ -74,9 +71,9 @@ public class UpdateAppointmentController implements Initializable {
     @FXML
     private DatePicker mAppDateEnd;
     @FXML
-    private ComboBox<String> mAppStart;
+    private ChoiceBox<String> mAppStart;
     @FXML
-    private ComboBox<String> mAppEnd;
+    private ChoiceBox<String> mAppEnd;
     
     @FXML
     private void handleUpdateAppointmentCancel(ActionEvent event) throws IOException{
