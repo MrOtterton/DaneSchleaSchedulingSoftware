@@ -25,6 +25,8 @@ import java.time.format.FormatStyle;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -48,6 +50,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import static javax.swing.UIManager.getInt;
 
 /**
  * FXML Controller class
@@ -114,6 +117,9 @@ public class ReportsController implements Initializable {
     private final ZoneId zID = ZoneId.systemDefault();
     private final DateTimeFormatter dateTF = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT);
     String thisUser;
+    Integer numbMonth;
+    String numbType;
+    String numbLoc;
     
     @FXML
     private void handleReportsCancel(ActionEvent event) throws IOException{
@@ -134,6 +140,14 @@ public class ReportsController implements Initializable {
         else{
             System.out.println("Operation cancelled.");
         }
+    }
+    
+    //number of appointment types by month button handler
+    public void typeHandler() throws IOException {
+        numbMonth = Integer.parseInt(typesMonth.getValue());
+        numbType = typesType.getValue();
+        
+        monthTypeResult();
     }
 
     /**
@@ -185,6 +199,7 @@ public class ReportsController implements Initializable {
     }    
     
     //retrieve the specified user schedule
+    @FXML
     public void scheduleBoxSelect() throws IOException{
         thisUser = scheduleBox.getValue();
 
@@ -236,5 +251,25 @@ public class ReportsController implements Initializable {
             System.out.println("Non-SQL error");
         }
         reportView.getItems().setAll(userSchedule);
+    }
+
+    //calculate amount of appts per month/type combo
+    private void monthTypeResult() {
+        dbConnect();
+        try{
+            PreparedStatement mStat = getConn().prepareStatement("SELECT * "
+                + "FROM appointment WHERE appointment.title = ? AND MONTH(appointment.start) = ?");
+            mStat.setString(1, numbType);
+            mStat.setInt(2, numbMonth);
+            ResultSet mType = mStat.executeQuery();
+            
+            int typeCount = 0;
+            while(mType.next()){
+                typeCount++;
+            }
+            typesNumberField.setText(Integer.toString(typeCount));
+        } catch (SQLException se) {
+            System.out.println("SQL error");
+        }
     }
 }
