@@ -66,7 +66,11 @@ public class Appointment {
     
     //Getter
 
-    public String getCustomer(){
+    public static ObservableList<Appointment> getAppointmentList() {
+        return appointmentList;
+    }
+    
+        public String getCustomer(){
         return this.customer;
     }
     
@@ -177,13 +181,6 @@ public class Appointment {
     }
     
     public static Boolean appointmentValidate(String title, String description, String location, String contact, String url, LocalDateTime start, LocalDateTime end) throws IOException{
-        LocalDate startDate = start.toLocalDate();
-        LocalDate endDate = end.toLocalDate();
-        Integer dayOfWeek = startDate.getDayOfWeek().getValue();
-        
-        LocalTime startTime = start.toLocalTime();
-        LocalTime endTime = end.toLocalTime();
-        
         if(title.isEmpty()){
            return false;
        }
@@ -199,16 +196,7 @@ public class Appointment {
        else if(url.isEmpty()){
            return false;
        }
-       else if(start == end || start == null || end == null){
-           return false;
-       }
-       else if(startDate != endDate){
-           return false;
-       }
-       else if(dayOfWeek == 0 || dayOfWeek == 6){
-           return false;
-       }
-       else if(startTime.isAfter(endTime)){
+       else if(end.isBefore(start) || start.isBefore(LocalDateTime.now())){
            return false;
        }
         return true;

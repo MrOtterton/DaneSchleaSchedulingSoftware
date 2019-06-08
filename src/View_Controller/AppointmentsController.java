@@ -6,8 +6,8 @@
 package View_Controller;
 
 import Models.Appointment;
+import static Models.Appointment.getAppointmentList;
 import static Models.Appointment.setAppointmentList;
-import static Models.Customer.getCustomerList;
 import static Util.mainDB.dbConnect;
 import static Util.mainDB.getConn;
 import java.io.IOException;
@@ -24,8 +24,6 @@ import java.time.format.FormatStyle;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -142,7 +140,7 @@ public class AppointmentsController implements Initializable {
             alert.showAndWait();
             return; 
         }
-        updateApptIndex = getCustomerList().indexOf(updateAppt);
+        updateApptIndex = getAppointmentList().indexOf(updateAppt);
         
         try{
             Parent updateCustParent = FXMLLoader.load(getClass().getResource("UpdateAppointment.fxml"));
@@ -230,9 +228,10 @@ public class AppointmentsController implements Initializable {
     private void deleteAppointment(Appointment apptSelected) {
         try{
             dbConnect();
-            PreparedStatement appt = getConn().prepareStatement("SELECT appointment.appointmentId, appointment.customerId, customer.customerId, customer.customerName "
-                    + "FROM appointment, customer WHERE appointment.customerId = customer.customerId AND customer.customerName = ?");
+            PreparedStatement appt = getConn().prepareStatement("SELECT appointment.appointmentId, appointment.customerId, appointment.description, customer.customerId, customer.customerName "
+                    + "FROM appointment, customer WHERE appointment.customerId = customer.customerId AND customer.customerName = ? AND appointment.description = ?");
                 appt.setString(1, apptSelected.getCustomer());
+                appt.setString(2, apptSelected.getDescription());
                 ResultSet resAppt = appt.executeQuery();
                 while(resAppt.next()){
                     int rApp = (int) resAppt.getObject("appointmentId");

@@ -7,8 +7,14 @@ package View_Controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
@@ -20,7 +26,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -59,7 +64,7 @@ public class UpdateAppointmentController implements Initializable {
     @FXML
     private TextField mAppNameField;
     @FXML
-    private TextField mAppTitleField;
+    private ChoiceBox<String> mAppTitle;
     @FXML
     private TextArea mAppDescField;
     @FXML
@@ -74,6 +79,12 @@ public class UpdateAppointmentController implements Initializable {
     private ChoiceBox<String> mAppStart;
     @FXML
     private ChoiceBox<String> mAppEnd;
+    
+    //Set times for start and end
+    private ObservableList<String> timeSetter;
+    //time formatter
+    private final DateTimeFormatter timeF = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT);
+    private final ZoneId zID = ZoneId.systemDefault();
     
     @FXML
     private void handleUpdateAppointmentCancel(ActionEvent event) throws IOException{
@@ -103,10 +114,50 @@ public class UpdateAppointmentController implements Initializable {
 
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        setLocation();
+        setTimes();
+        setTitle();
     }    
+    
+    //set location choicebox
+    private void setLocation(){
+        //location choicebox choices
+        mAppLoc.getItems().add("New York");
+        mAppLoc.getItems().add("Los Angeles");
+        mAppLoc.getItems().add("Houston");
+        mAppLoc.getItems().add("Salt Lake City");
+        mAppLoc.getItems().add("Lancaster");
+        mAppLoc.getItems().add("London");
+        mAppLoc.getItems().add("Glasgow");
+        mAppLoc.getItems().add("Toronto");
+        mAppLoc.getItems().add("Vancouver");
+        mAppLoc.getItems().add("Ottawa");
+        mAppLoc.getItems().add("Oslo");
+        mAppLoc.getItems().add("Bergen");
+        mAppLoc.getItems().add("Trondheim");
+    }
+    
+    //set title choicebox
+    private void setTitle(){
+        mAppTitle.getItems().add("Initial Consultation");
+        mAppTitle.getItems().add("Consultation");
+        mAppTitle.getItems().add("Final Consultation");
+    }
+    
+    private void setTimes(){
+        timeSetter = FXCollections.observableArrayList();
+        LocalTime timeStart = LocalTime.MIDNIGHT.plusHours(8);
+        for(int t = 0; t < 20; t++){
+            timeSetter.add(timeStart.format(timeF));
+            timeStart = timeStart.plusMinutes(30);
+        }
+        mAppStart.getItems().addAll(timeSetter);
+        mAppEnd.getItems().addAll(timeSetter);
+    }
     
 }
