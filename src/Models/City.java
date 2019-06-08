@@ -6,6 +6,8 @@
 package Models;
 
 import java.io.IOException;
+import javafx.scene.control.Alert;
+import javafx.stage.Modality;
 
 /**
  *
@@ -62,6 +64,12 @@ public class City {
                 || city.equals("Vancouver") || city.equals("Ottawa") || city.equals("Oslo") || city.equals("Bergen") || city.equals("Trondheim")){
             return true;
         }
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.initModality(Modality.NONE);
+        alert.setTitle("Error");
+        alert.setHeaderText("Error submitting appointment");
+        alert.setContentText("City field invalid.");
+        alert.showAndWait();
         return false;
     }
     

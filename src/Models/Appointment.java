@@ -11,6 +11,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
+import javafx.stage.Modality;
 
 /**
  *
@@ -182,21 +184,57 @@ public class Appointment {
     
     public static Boolean appointmentValidate(String title, String description, String location, String contact, String url, LocalDateTime start, LocalDateTime end) throws IOException{
         if(title.isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.initModality(Modality.NONE);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error submitting appointment");
+            alert.setContentText("Title invalid.");
+            alert.showAndWait();
            return false;
        }
        else if(description.isEmpty()){
+           Alert alert = new Alert(Alert.AlertType.ERROR);
+           alert.initModality(Modality.NONE);
+           alert.setTitle("Error");
+           alert.setHeaderText("Error submitting appointment");
+           alert.setContentText("Description empty.");
+           alert.showAndWait();
            return false;
        }
        else if(location.isEmpty()){
+           Alert alert = new Alert(Alert.AlertType.ERROR);
+           alert.initModality(Modality.NONE);
+           alert.setTitle("Error");
+           alert.setHeaderText("Error submitting appointment");
+           alert.setContentText("Location invalid.");
+           alert.showAndWait();
            return false;
        }
        else if(contact.isEmpty()){
+           Alert alert = new Alert(Alert.AlertType.ERROR);
+           alert.initModality(Modality.NONE);
+           alert.setTitle("Error");
+           alert.setHeaderText("Error submitting appointment");
+           alert.setContentText("Customer empty.");
+           alert.showAndWait();
            return false;
        }
        else if(url.isEmpty()){
+           Alert alert = new Alert(Alert.AlertType.ERROR);
+           alert.initModality(Modality.NONE);
+           alert.setTitle("Error");
+           alert.setHeaderText("Error submitting appointment");
+           alert.setContentText("URL empty.");
+           alert.showAndWait();
            return false;
        }
        else if(end.isBefore(start) || start.isBefore(LocalDateTime.now())){
+           Alert alert = new Alert(Alert.AlertType.ERROR);
+           alert.initModality(Modality.NONE);
+           alert.setTitle("Error");
+           alert.setHeaderText("Error submitting appointment");
+           alert.setContentText("Date or time is invalid.");
+           alert.showAndWait();
            return false;
        }
         return true;

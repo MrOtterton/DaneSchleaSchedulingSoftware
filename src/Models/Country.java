@@ -6,6 +6,8 @@
 package Models;
 
 import java.io.IOException;
+import javafx.scene.control.Alert;
+import javafx.stage.Modality;
 
 /**
  *
@@ -44,6 +46,12 @@ public class Country {
         if(country.equals("US") || country.equals("UK") || country.equals("Canada") || country.equals("Norway")){
             return true;
         }
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.initModality(Modality.NONE);
+        alert.setTitle("Error");
+        alert.setHeaderText("Error");
+        alert.setContentText("Country field invalid.");
+        alert.showAndWait();
         return false;
     }
 }

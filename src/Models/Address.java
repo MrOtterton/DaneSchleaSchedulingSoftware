@@ -6,6 +6,8 @@
 package Models;
 
 import java.io.IOException;
+import javafx.scene.control.Alert;
+import javafx.stage.Modality;
 
 /**
  *
@@ -86,12 +88,30 @@ public class Address {
     
     public static Boolean addressValidate(String address, String postalCode, String phone) throws IOException{
         if(address.isEmpty()){
+           Alert alert = new Alert(Alert.AlertType.ERROR);
+           alert.initModality(Modality.NONE);
+           alert.setTitle("Error");
+           alert.setHeaderText("Error submitting address");
+           alert.setContentText("Address empty.");
+           alert.showAndWait();
             return false;
         }
         else if(postalCode.isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+           alert.initModality(Modality.NONE);
+           alert.setTitle("Error");
+           alert.setHeaderText("Error submitting address");
+           alert.setContentText("Postal code empty.");
+           alert.showAndWait();
             return false;
         }
         else if(phone.isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+           alert.initModality(Modality.NONE);
+           alert.setTitle("Error");
+           alert.setHeaderText("Error submitting address");
+           alert.setContentText("Phone empty.");
+           alert.showAndWait();
             return false;
         }
         return true;

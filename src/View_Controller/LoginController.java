@@ -121,7 +121,9 @@ public class LoginController implements Initializable {
     /*
      * Check UserName and Password for nulls
      * valides username and password in the DB
+     * 
      * uses lambdas for incorrect username/password to exit system - easier readability and forces system exit before anything else can run
+     * 
      * logs successful logins in a text file with the user who logged in
      */ 
     User loginValidation(String userName, String password) throws IOException{

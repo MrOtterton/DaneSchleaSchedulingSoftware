@@ -137,3 +137,5 @@
 2019-06-08T14:01:48.620-04:00[America/New_York] test logged in
 2019-06-08T14:06:55.245-04:00[America/New_York] test logged in
 2019-06-08T14:12:46.997-04:00[America/New_York] test2 logged in
+2019-06-08T14:32:15.774-04:00[America/New_York] test2 logged in
+2019-06-08T14:36:20.266-04:00[America/New_York] test2 logged in

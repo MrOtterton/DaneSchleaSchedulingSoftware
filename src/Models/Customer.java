@@ -8,6 +8,8 @@ package Models;
 import java.io.IOException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
+import javafx.stage.Modality;
 
 /**
  *
@@ -141,6 +143,12 @@ public class Customer {
     
     public static Boolean customerValidate(String customerName) throws IOException{
         if(customerName.isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+           alert.initModality(Modality.NONE);
+           alert.setTitle("Error");
+           alert.setHeaderText("Error submitting customer");
+           alert.setContentText("Name empty.");
+           alert.showAndWait();
             return false;
         }
         return true;
