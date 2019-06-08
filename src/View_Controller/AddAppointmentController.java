@@ -141,12 +141,6 @@ public class AddAppointmentController implements Initializable {
         Timestamp timeStart = Timestamp.valueOf(zoneStart.toLocalDateTime());
         Timestamp timeEnd = Timestamp.valueOf(zoneEnd.toLocalDateTime());
         
-        //check customer exists and get ID
-        //checkCustomer(apCust);
-        
-        //check overlap
-        //checkApptTime(timeStart, timeEnd);
-        
         //validate appointment
         if(Appointment.appointmentValidate(apTitle, apDesc, apLoc, apCust, apURL, apptStart, apptEnd) == false){
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -278,19 +272,9 @@ public class AddAppointmentController implements Initializable {
                     custID = (int) chkRS.getInt("customerId");
                     return false;
                 }
-                /*else{
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.initModality(Modality.NONE);
-                alert.setTitle("Error");
-                alert.setHeaderText("Customer error");
-                alert.setContentText("Customer doesn't exist");
-                alert.showAndWait();
-                System.out.println("SQL error during customer check1331");
-                return true;
-                }*/
             } 
         } catch (SQLException ex) {
-            System.out.println("SQL error during customer check333");
+            System.out.println("SQL error during customer check");
         }
         return true;
     }
@@ -312,7 +296,7 @@ public class AddAppointmentController implements Initializable {
             }
         } 
         catch (SQLException ex) {
-            System.out.println("SQL error during time check123");
+            System.out.println("SQL error during time check");
         }
         return false;
     }
