@@ -173,6 +173,7 @@ public class AppointmentsController implements Initializable {
     }
     
     //weekly radio button handler - only display appts within a week upcoming
+    //lambda used for setting of table to filtered week value
     @FXML
     void weeklyRadio(ActionEvent event){
         appMonthly.setSelected(false);
@@ -188,6 +189,7 @@ public class AppointmentsController implements Initializable {
     }
     
     //montly radio button handler - only display appts within a month upcoming
+    //lambda used for setting of table to filtered month value
     @FXML
     void monthlyRadio(ActionEvent event){
         appWeekly.setSelected(false);

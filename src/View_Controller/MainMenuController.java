@@ -42,6 +42,7 @@ public class MainMenuController implements Initializable {
     private Label labelMainMenu;
     
     //Button handlers
+    //Used lambda for immediate system exit from main menu
     @FXML
     void handleMenuExit(ActionEvent event) throws IOException{
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
