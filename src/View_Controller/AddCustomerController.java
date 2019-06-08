@@ -28,6 +28,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
@@ -64,11 +65,11 @@ public class AddCustomerController implements Initializable {
     @FXML
     private TextField mCustAddressContField;
     @FXML
-    private TextField mCustCityField;
+    private ChoiceBox<String> mCustCityField;
     @FXML
     private TextField mCustPostalField;
     @FXML
-    private TextField mCustCountryField;
+    private ChoiceBox<String> mCustCountryField;
     @FXML
     private TextField mCustPhoneField;
     @FXML
@@ -103,9 +104,9 @@ public class AddCustomerController implements Initializable {
         String name = mCustNameField.getText();
         String addr = mCustAddressField.getText();
         String addr2 = mCustAddressContField.getText();
-        String cityName = mCustCityField.getText();
+        String cityName = mCustCityField.getValue();
         String postal = mCustPostalField.getText();
-        String country = mCustCountryField.getText();
+        String country = mCustCountryField.getValue();
         String phone = mCustPhoneField.getText();       
         if(Customer.customerValidate(name) == false || Address.addressValidate(addr, postal, phone) == false || City.cityValidate(cityName) == false || Country.countryValidate(country) == false){
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -170,10 +171,42 @@ public class AddCustomerController implements Initializable {
 
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        //load country and city
+        loadCity();
+        loadCountry();
     }    
+    
+    //load city choicebox
+    private void loadCity(){
+        //city choicebox choices
+        mCustCityField.getItems().add("New York");
+        mCustCityField.getItems().add("Los Angeles");
+        mCustCityField.getItems().add("Houston");
+        mCustCityField.getItems().add("Salt Lake City");
+        mCustCityField.getItems().add("Lancaster");
+        mCustCityField.getItems().add("London");
+        mCustCityField.getItems().add("Glasgow");
+        mCustCityField.getItems().add("Toronto");
+        mCustCityField.getItems().add("Vancouver");
+        mCustCityField.getItems().add("Ottawa");
+        mCustCityField.getItems().add("Oslo");
+        mCustCityField.getItems().add("Bergen");
+        mCustCityField.getItems().add("Trondheim");
+        mCustCityField.setValue("New York");
+    }
+    
+    //load country choicebox
+    private void loadCountry(){
+        mCustCountryField.getItems().add("US");
+        mCustCountryField.getItems().add("UK");
+        mCustCountryField.getItems().add("Canada");
+        mCustCountryField.getItems().add("Norway");
+        mCustCountryField.setValue("US");
+    }
     
 }

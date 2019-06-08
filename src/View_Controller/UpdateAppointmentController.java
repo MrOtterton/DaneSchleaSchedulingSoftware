@@ -95,7 +95,8 @@ public class UpdateAppointmentController implements Initializable {
     
     //Set times for start and end
     private ObservableList<String> timeSetter;
-    //time formatter
+    //time and date formatter
+    private final DateTimeFormatter dateF = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT);
     private final DateTimeFormatter timeF = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT);
     private final ZoneId zID = ZoneId.systemDefault();
     //get index from appointments controller for selected appointment
@@ -110,6 +111,8 @@ public class UpdateAppointmentController implements Initializable {
     private String oldTitle;
     private String oldDesc;
     private String oldLoc;
+    //previous appt url
+    private String uApptURL;
     
     
     @FXML
@@ -238,18 +241,18 @@ public class UpdateAppointmentController implements Initializable {
         String apptTitle = appointment.getTitle();
         String apptDesc = appointment.getDescription();
         String apptLoc = appointment.getLocation();
-        //set fields -- not datepicker or time
+        //set fields
+        oldApptData(apptName, apptTitle, apptDesc, apptLoc);
         setLocation();
         setTimes();
         setTitle();
+        setTimeAndDate(appointment);
+        getURL(oldName, oldTitle, oldDesc, oldLoc);
         
         mAppNameField.setText(apptName);
         mAppTitle.setValue(apptTitle);
         mAppDescField.setText(apptDesc);
         mAppLoc.setValue(apptLoc);
-        
-        //set old values
-        oldApptData(apptName, apptTitle, apptDesc, apptLoc);
 
     }    
     
@@ -300,6 +303,7 @@ public class UpdateAppointmentController implements Initializable {
             ResultSet chkRS = chkStat.executeQuery();
             while(chkRS.next()){
                 uApptID = chkRS.getInt("appointmentId");
+                
                 return false;
             }
         } catch (SQLException ex) {
@@ -307,6 +311,24 @@ public class UpdateAppointmentController implements Initializable {
         }
         System.out.println("appt sql check");
         return true;
+    }
+    
+    private void getURL(String custName, String title, String desc, String location){
+        try{
+            PreparedStatement chkStat = getConn().prepareStatement("SELECT url "
+                    + "FROM appointment WHERE contact = ? AND description = ? AND title = ? AND location = ?");
+            chkStat.setString(1, custName);
+            chkStat.setString(2, desc);
+            chkStat.setString(3, title);
+            chkStat.setString(4, location);
+            ResultSet chkURL = chkStat.executeQuery();
+            while(chkURL.next()){
+                uApptURL = chkURL.getString("url");
+                mAppURLField.setText(uApptURL);
+            }
+        } catch (SQLException ex) {
+            System.out.println("SQL error for old appointment url");
+        }
     }
     
     //check that customer exists and return ID
@@ -362,6 +384,18 @@ public class UpdateAppointmentController implements Initializable {
         oldTitle = title;
         oldDesc = description;
         oldLoc = location;
+        }
+    
+    public void setTimeAndDate(Appointment appt){
+        appointment = appt;
+        String start = appointment.getStart();
+        LocalDateTime startTime = LocalDateTime.parse(start, dateF);
+        String end = appointment.getEnd();
+        LocalDateTime endTime = LocalDateTime.parse(end, dateF);
+        mAppDateStart.setValue(LocalDate.parse(appointment.getStart(), dateF));
+        mAppDateEnd.setValue(LocalDate.parse(appointment.getStart(), dateF));
+        mAppStart.getSelectionModel().select(startTime.toLocalTime().format(timeF));
+        mAppEnd.getSelectionModel().select(endTime.toLocalTime().format(timeF));
     }
     
 }
