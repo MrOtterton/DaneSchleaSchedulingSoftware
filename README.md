@@ -1,4 +1,4 @@
-- All fields are case-specific and cities/countries must be entered from list provided below, even for customers.
+- All fields are case-specific.
 
 - Login form is in English and German, change your locale to GERMAN or change line 108 on LoginController to Locale.GERMAN to check
 
@@ -25,26 +25,3 @@ Login form:
 
 -Username: test2
 -Password: test2
-------------------
-Cities:
-
--New York
--Los Angeles
--Houston
--Salt Lake City
--Lancaster
--London
--Glasgow
--Toronto
--Vancouver
--Ottawa
--Oslo
--Bergen
--Trondheim
-------------------
-Countries:
-
--US
--UK
--Canada
--Norway
